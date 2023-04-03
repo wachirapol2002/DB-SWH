@@ -1,0 +1,54 @@
+<%- include('head') %>
+<%- include('header') %>
+<body>
+    <div id="detail">
+        <main>
+            <div class="container-fluid justify-content-center" style="min-height: 80vh; background-color:#f5f5f5;">
+                <div class="row p-5"></div>
+                <div class="container-fluid pt-2 pl-5 pr-5 pb-5 mt-5" style="width: 75vw; border-radius: 25px; background-color: #e7e7e7;">
+                    <div class="col text-center my-2" style="color:rgb(96, 150, 180); font-size: 1.6rem;">
+                        Create New Team
+                    </div>
+                    <!-- <form action="" method="POST"> -->
+                    <form>
+                        <div class="form-group mb-5">
+                          <label for="teamName">ชื่อทีม</label>
+                          <input type="text" class="form-control" name="teamName" id="teamName">
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button type="submit" class="btn btn-primary">เพิ่ม</button>
+                            <button type="button" class="btn btn-light">ยกเลิก</button>
+                        </div>
+                        
+                      </form>
+                </div>
+                
+            </div>
+            <div class="container-fluid" style="min-height: 2rem; background-color: #f5f5f5;"></div>
+        </main>
+        <%- include('footer') %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+    var detail = new Vue({
+    el: '#detail',
+    data: {
+        center:{
+            'd-flex': true,
+            'justify-content-center':true,
+            'align-items-center':true
+        },
+    },
+    methods: {
+        
+    },
+    computed:{
+        
+    },
+    watch:{
+        
+    },
+})
+    </script>
+</body>
+</html>
