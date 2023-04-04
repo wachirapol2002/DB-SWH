@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    
+
+    <title>SWH</title>
+    <style>
+        h1{
+            font-family: 'DM Serif Display';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 36px;
+            line-height: 49px;
+        }
+        #row-table-head{
+            font-family: 'DM Serif Display';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 33px;
+            width: 94%;
+            height: 77px;
+            
+        }
+        #row-table{
+            background-color : #E7E7E7;
+            border-radius: 30px;
+            width: 94%;
+            height: 77px;
+            font-family: 'DM Serif Display';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 33px;
+        }
+        /* row hover */
+        #row-table:hover{
+            background-color : hsl(0, 0%, 85%);
+            transition: 0.1s;
+        }
+        #row-1col{
+            left: 3%;
+        }
+        #row-2col{
+            justify-items: right;
+        }
+        #icon{
+            color:#6096B4;
+        }
+        #icon:hover{
+            color:hsl(201, 36%, 30%);
+            transition: 0.1s;
+        }
+        #add_but{
+            background: #EEE9DA;
+            border-radius: 30px;
+            width: 15%;
+            text-align: center;
+            font-family: 'DM Serif Display';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 33px;
+            padding: 10px;
+        }
+        #add_but:hover{
+            background: hsl(45, 37%, 85%);
+            transition: 0.1s;
+        }
+    </style>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #60b4a8; height: 10vh;">
+            <div class="container-fluid">
+                <div class="d-flex">
+                    <a class="navbar-brand text-light" href="#">
+                        <img src="#" style="max-height:7.5vh; width: auto; border-radius: 50%;">
+                        Company
+                    </a>
+                    <a class="nav-link text-light" href="#">Project</a>
+                    <a class="nav-link text-light" href="#">Team</a>
+                    <a class="nav-link text-light" href="#">Employee</a>
+                </div>
+                <div class="d-flex">
+                    <a class="bi bi-person-fill mx-3" style="font-size: 2rem;"></a>
+                </div>
+            </div>
+        </nav>
+        <div>
+            <div class="row mx-5 my-4">
+                <h1>All Teams</h1>
+                <div type="button" class="mx-5" id="add_but">+ Create new team</div>
+            </div>
+            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-10" id="row-1col">
+                        Akasuki Team
+                    </div>
+                    <div class="col-2" id="row-2col">
+                        <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                        <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                    </div>
+            </div>
+            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-10" id="row-1col">
+                    Grapes Juice
+                </div>
+                <div class="col-2" id="row-2col">
+                    <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                    <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                </div>
+            </div>
+            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-10" id="row-1col">
+                    いっぱいいっぱいありがとう
+                </div>
+                <div class="col-2" id="row-2col">
+                    <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                    <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                </div>
+            </div>
+            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-10" id="row-1col">
+
+                </div>
+                <div class="col-2" id="row-2col">
+
+                </div>
+            </div>
+            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-10" id="row-1col">
+
+                </div>
+                <div class="col-2" id="row-2col">
+
+                </div>
+            </div>
+            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-10" id="row-1col">
+
+                </div>
+                <div class="col-2" id="row-2col">
+
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>

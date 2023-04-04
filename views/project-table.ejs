@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <title>SWH</title>
+    <style>
+        h1{
+            font-family: 'DM Serif Display';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 36px;
+            line-height: 49px;
+        }
+        #row-table-head{
+            font-family: 'DM Serif Display';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 33px;
+            width: 94%;
+            height: 77px;
+            
+        }
+        #row-table{
+            background-color : #E7E7E7;
+            border-radius: 30px;
+            width: 94%;
+            height: 77px;
+            font-family: 'DM Serif Display';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 33px;
+        }
+        #row-table:hover{
+            background-color : hsl(0, 0%, 85%);
+            transition: 0.1s;
+        }
+        #row-1col{
+            text-align: center;
+        }
+        #row-3col{
+            text-align: center;
+        }
+        #status-fin{
+            background: #6CD396;
+            border-radius: 30px;
+            color: white;
+            text-align: center;
+
+        }
+        #status-inpro{
+            background: #84DCE1;
+            border-radius: 30px;
+            color: white;
+            text-align: center;
+
+        }
+        #status-notsta{
+            background: #FF8383;
+            border-radius: 30px;
+            color: white;
+            text-align: center;
+
+        }
+    </style>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #60b4a8; height: 10vh;">
+            <div class="container-fluid">
+                <div class="d-flex">
+                    <a class="navbar-brand text-light" href="#">
+                        <img src="#" style="max-height:7.5vh; width: auto; border-radius: 50%;">
+                        Company
+                    </a>
+                    <a class="nav-link text-light" href="#">Project</a>
+                    <a class="nav-link text-light" href="#">Team</a>
+                    <a class="nav-link text-light" href="#">Employee</a>
+                </div>
+                <div class="d-flex">
+                    <a class="bi bi-person-fill mx-3" style="font-size: 2rem;"></a>
+                </div>
+            </div>
+        </nav>
+        <div>
+            <h1 class="mx-5 my-4">All Project</h1>
+            <div class="row mx-auto py-4" id="row-table-head">
+                <div class="col-2"  id="row-1col">
+                    Project no.
+                </div>
+                <div class="col-8">
+                    Name
+                </div>
+                <div class="col-2"  id="row-3col">
+                    Status
+                </div>
+            </div>
+            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-2" id="row-1col">
+                        001
+                    </div>
+                    <div class="col-8">
+                        Lavender Haze
+                    </div>
+                    <div class="col-2">
+                        <div class="w-75 mx-auto" id="status-fin">
+                            Finish
+                        </div>
+                    </div>
+            </div>
+            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-2" id="row-1col">
+                    002
+                </div>
+                <div class="col-8">
+                    Maroon
+                </div>
+                <div class="col-2">
+                    <div class="w-75 mx-auto" id="status-inpro">
+                        In progress
+                    </div>
+                </div>
+            </div>
+            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-2" id="row-1col">
+                    003
+                </div>
+                <div class="col-8">
+                    Anti-Hero
+                </div>
+                <div class="col-2">
+                    <div class="w-75 mx-auto" id="status-notsta">
+                        Not Started
+                    </div>
+                </div>
+            </div>
+            <div class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-2" id="row-1col">
+                    
+                </div>
+                <div class="col-8">
+                    
+                </div>
+                <div class="col-2">
+
+                </div>
+            </div>
+            <div class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-2" id="row-1col">
+                    
+                </div>
+                <div class="col-8">
+                    
+                </div>
+                <div class="col-2">
+
+                </div>
+            </div>
+            <div class="row mx-auto my-4 py-4" id="row-table">
+                <div class="col-2" id="row-1col">
+                    
+                </div>
+                <div class="col-8">
+                    
+                </div>
+                <div class="col-2">
+
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>

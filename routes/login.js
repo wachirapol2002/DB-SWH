@@ -7,4 +7,9 @@ router.get('/', (req, res) => {
     res.render('login', data)
 })
 
+router.get('/register', (req, res) => {
+    var data = { title: '', data: 'data' }
+    res.render('register', data)
+})
+
 module.exports = router
