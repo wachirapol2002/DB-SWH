@@ -20,9 +20,9 @@ Database Project Software House Management
    ```js
    const pool = mysql.createPool({
      host: 'localhost',
-     user: 'root',          <<<< Username MySQL (ปกติเป็น root)
-     password: 'password',  <<<< รหัส MySQL ที่ตั้งไว้ตอนลง mySQL
-     database: '',          <<<< ชื่อ DB
+     user: 'root',          // Username MySQL (ปกติเป็น root)
+     password: 'password',  // รหัส MySQL ที่ตั้งไว้ตอนลง mySQL
+     database: '',          // ชื่อ DB
      ...
    });
    ```
