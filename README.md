@@ -1,11 +1,32 @@
 # DB-SWH
 Database Project Software House Management
 
--ใช้ node.js ในการ run install ในเครื่องด้วย
+### Prerequisites
 
--conDB ส่วนของการเชื่อมต่อ Mysql database
+ติดตั้งโปรแกรมต่อไปนี้ลงเครื่อง
+* [Node.js](https://nodejs.org/)
 
--clone git มาแล้ว ใช้คำสั่ง npm install ที่ Terminal 
-เพื่อติดตั้ง node_modules ด้วย
+### Installation
 
--node app.js เพื่อทดลองใช้งาน
+1. Clone git repo ลงเครื่อง
+   ```sh
+   git clone https://github.com/wachirapol2002/DB-SWH.git
+   ```
+2. ติดตั้ง NPM packages
+   ```sh
+   npm install
+   ```
+4. ตั้งค่า DB โดยแก้ไขไฟล์ `conDB.js`
+   ```js
+   const pool = mysql.createPool({
+     host: 'localhost',
+     user: 'root',          <<<< Username MySQL (ปกติเป็น root)
+     password: 'password',  <<<< รหัส MySQL ที่ตั้งไว้ตอนลง mySQL
+     database: '',          <<<< ชื่อ DB
+     ...
+   });
+   ```
+5. ทดลองใช้งาน
+   ```sh
+   npm run serve
+   ```
