@@ -33,63 +33,90 @@
     }
 </style>
 <body>
-        <div>
-            <div class="row mx-5 my-4">
-                <h1>All Teams</h1>
-                <div type="button" class="mx-5" id="add_but">+ Create new team</div>
-            </div>
-            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+    <div id="app">
+        <main>
+            <div>
+                <div class="row mx-5 my-4">
+                    <h1>All Teams</h1>
+                    <div type="button" class="mx-5" id="add_but">+ Create new team</div>
+                </div>
+                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                        <div class="col-10" id="row-1col">
+                            Akasuki Team
+                        </div>
+                        <div class="col-2" id="row-2col">
+                            <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                            <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                        </div>
+                </div>
+                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
                     <div class="col-10" id="row-1col">
-                        Akasuki Team
+                        Grapes Juice
                     </div>
                     <div class="col-2" id="row-2col">
                         <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
                         <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
                     </div>
-            </div>
-            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-10" id="row-1col">
-                    Grapes Juice
                 </div>
-                <div class="col-2" id="row-2col">
-                    <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
-                    <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-10" id="row-1col">
+                        いっぱいいっぱいありがとう
+                    </div>
+                    <div class="col-2" id="row-2col">
+                        <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                        <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                    </div>
                 </div>
-            </div>
-            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-10" id="row-1col">
-                    いっぱいいっぱいありがとう
-                </div>
-                <div class="col-2" id="row-2col">
-                    <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
-                    <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
-                </div>
-            </div>
-            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-10" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-10" id="row-1col">
 
-                </div>
-                <div class="col-2" id="row-2col">
+                    </div>
+                    <div class="col-2" id="row-2col">
 
+                    </div>
                 </div>
-            </div>
-            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-10" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-10" id="row-1col">
 
+                    </div>
+                    <div class="col-2" id="row-2col">
+
+                    </div>
                 </div>
-                <div class="col-2" id="row-2col">
+                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-10" id="row-1col">
 
-                </div>
-            </div>
-            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-10" id="row-1col">
+                    </div>
+                    <div class="col-2" id="row-2col">
 
-                </div>
-                <div class="col-2" id="row-2col">
-
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+        <%- include('footer') %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+    var app = new Vue({
+    el: '#app',
+    data: {
+        center:{
+            'd-flex': true,
+            'justify-content-center':true,
+            'align-items-center':true
+        },
+    },
+    methods: {
+        
+    },
+    computed:{
+        
+    },
+    watch:{
+        
+    },
+    })
+    </script>
 
 </body>
 </html>

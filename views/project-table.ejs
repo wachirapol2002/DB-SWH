@@ -30,6 +30,8 @@
     }
 </style>
 <body>
+    <div id="app">
+        <main>
         <div>
             <h1 class="mx-5 my-4">All Project</h1>
             <div class="row mx-auto py-4" id="row-table-head">
@@ -116,6 +118,32 @@
                 </div>
             </div>
         </div>
+    </main>
+    <%- include('footer') %>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+var app = new Vue({
+el: '#app',
+data: {
+    center:{
+        'd-flex': true,
+        'justify-content-center':true,
+        'align-items-center':true
+    },
+},
+methods: {
+    
+},
+computed:{
+    
+},
+watch:{
+    
+},
+})
+</script>
+
 
 </body>
 </html>
