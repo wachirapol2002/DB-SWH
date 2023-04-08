@@ -4,7 +4,7 @@ const pool = require("../conDB");
 
 router.get('/', (req, res) => {
     var data = { title: '', data: 'data' }
-    res.render('project-create-employee', data)
+    res.render('employees-table', data)
 })
 
 router.get('/add', (req, res) => {
