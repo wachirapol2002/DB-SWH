@@ -10,22 +10,22 @@
                         Create New Project
                     </div>
                     <!-- <form action="" method="POST"> -->
-                    <form>
+                    <form  action="/project/add" method="POST">
                         <div class="form-group">
                           <label for="projectName">ชื่อโปรเจค</label>
-                          <input type="text" class="form-control" name="projectName" id="projectName">
+                          <input type="text" class="form-control" name="projectName" id="projectName" v-model="projectName">
                         </div>
                         <div class="form-group">
                           <label for="projectDetails">รายละเอียดโปรเจค</label>
-                          <textarea class="form-control" id="projectDetails" name="projectDetails" rows="4"></textarea>
+                          <textarea class="form-control" id="projectDetails" name="projectDetails" rows="4" v-model="projectDetails"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="projectTimeframe">รายละเอียด วัน-เวลาที่ต้องการโปรเจค</label>
-                            <input type="text" class="form-control" name="projectTimeframe" id="projectTimeframe">
+                            <input type="text" class="form-control" name="projectTimeframe" id="projectTimeframe" v-model="projectTimeframe">
                         </div>
                         <div class="form-group">
                             <label for="projectOwnerContact">ช่องทางการติดต่อ</label>
-                            <input type="text" class="form-control" name="projectOwnerContact" id="projectOwnerContact">
+                            <input type="text" class="form-control" name="projectOwnerContact" id="projectOwnerContact" v-model="projectOwnerContact">
                         </div>
 
                         <div class="mt-4 text-center">
@@ -46,6 +46,10 @@
     var app = new Vue({
     el: '#app',
     data: {
+        projectName: "",
+        projectDetails: "",
+        projectTimeframe: "",
+        projectOwnerContact: "",
         center:{
             'd-flex': true,
             'justify-content-center':true,

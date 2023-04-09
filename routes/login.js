@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../conDB");
 
+//check login ไปหน้า login ก่อน
 const ifNotLoggedin = (req, res, next) => {
     if(!req.session.login){
         return res.render('login');
@@ -15,10 +16,12 @@ const ifLoggedin = (req,res,next) => {
     next();
 }
 
+//หน้า root ไป ตาราง Project ถ้า login แล้ว
 router.get('/', ifNotLoggedin, (req, res) => {
     res.redirect('/project/')
 })
 
+//หน้า สมัครบัญชี
 router.get('/register', ifLoggedin,(req, res) => {
     let data = {
         username: req.session.username,
@@ -28,12 +31,11 @@ router.get('/register', ifLoggedin,(req, res) => {
     res.render('register', data)
 })
 
-
+//post เพื่อ register
 router.post("/register", ifLoggedin, async function (req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
     const conn = await pool.getConnection()
-    // Begin transaction
     await conn.beginTransaction();
     try {
         const [rows] = await conn.query("SELECT * FROM accounts WHERE username = ?", [username]);
@@ -51,11 +53,11 @@ router.post("/register", ifLoggedin, async function (req, res, next) {
     }
   });
 
+  //post เพื่อ login
   router.post("/login", ifLoggedin, async function (req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
     const conn = await pool.getConnection()
-    // Begin transaction
     await conn.beginTransaction();
     try {
         const [rows] = await conn.query("SELECT * FROM accounts WHERE username = ? and password = ?", [username, password]);
@@ -75,8 +77,8 @@ router.post("/register", ifLoggedin, async function (req, res, next) {
     }
   });
 
+  //logout ทำลาย session
   router.get('/logout',(req,res)=>{
-    //session destroy
     req.session = null;
     res.redirect('/');
 });

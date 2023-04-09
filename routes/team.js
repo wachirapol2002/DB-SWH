@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../conDB");
 
+//check login
 const ifNotLoggedin = (req, res, next) => {
     if(!req.session.login){
         return res.redirect('/');
@@ -9,6 +10,7 @@ const ifNotLoggedin = (req, res, next) => {
     next();
 }
 
+//หน้าตาราง ทีม
 router.get('/', ifNotLoggedin, (req, res) => {
     var data = { title: '', data: 'data' }
     res.render('team-table', {
@@ -18,6 +20,7 @@ router.get('/', ifNotLoggedin, (req, res) => {
     })
 })
 
+//หน้าสร้าง ทีม
 router.get('/create', ifNotLoggedin, (req, res) => {
     let data = {
         username: req.session.username,
@@ -27,6 +30,7 @@ router.get('/create', ifNotLoggedin, (req, res) => {
     res.render('project-create-team', data)
 })
 
+//หน้าปรับแต่งทีม
 router.get('/edit', ifNotLoggedin, (req, res) => {
     let data = {
         username: req.session.username,
@@ -36,6 +40,7 @@ router.get('/edit', ifNotLoggedin, (req, res) => {
     res.render('project-edit-team', data)
 })
 
+//หน้าเพิ่มสมาชิกทีม
 router.get('/add', ifNotLoggedin, (req, res) => {
     let data = {
         username: req.session.username,
@@ -45,6 +50,7 @@ router.get('/add', ifNotLoggedin, (req, res) => {
     res.render('project-team-add-member', data)
 })
 
+//หน้ารายละเอียดทีม
 router.get('/detail', ifNotLoggedin, (req, res) => {
     let data = {
         username: req.session.username,

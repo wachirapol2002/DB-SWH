@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2023 at 07:15 PM
+-- Generation Time: Apr 09, 2023 at 10:21 PM
 -- Server version: 8.0.32
 -- PHP Version: 8.2.0
 
@@ -33,6 +33,13 @@ CREATE TABLE `accounts` (
   `permission` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'ระดับสิทธิ์'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางเก็บ Account';
 
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`username`, `password`, `permission`) VALUES
+('admin', 'password', 'admin');
+
 -- --------------------------------------------------------
 
 --
@@ -46,18 +53,6 @@ CREATE TABLE `comments` (
   `message` varchar(300) NOT NULL COMMENT 'ข้อความ',
   `comment_timestamp` timestamp NOT NULL COMMENT 'บันทึกเวลา'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางความคิดเห็น';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contacts`
---
-
-CREATE TABLE `contacts` (
-  `contact_id` int NOT NULL COMMENT 'รหัสวิธีการติดต่อ',
-  `username` varchar(30) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
-  `contact` varchar(30) NOT NULL COMMENT 'วิธีการติดต่อ'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางวิธีการติดต่อ';
 
 -- --------------------------------------------------------
 
@@ -112,6 +107,7 @@ CREATE TABLE `requirements` (
   `projectname` varchar(30) NOT NULL COMMENT 'ชื่อโครงการ',
   `detail` varchar(5000) NOT NULL COMMENT 'รายละเอียดโครงการ',
   `budget` varchar(30) NOT NULL COMMENT 'งบประมาณ',
+  `contact` varchar(30) NOT NULL COMMENT 'ช่องทางติดต่อ',
   `require_timestamp` timestamp NOT NULL COMMENT 'บันทึกเวลา',
   `requirement_status` varchar(30) NOT NULL COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางความต้องการ';
@@ -158,12 +154,6 @@ ALTER TABLE `comments`
   ADD PRIMARY KEY (`comment_id`);
 
 --
--- Indexes for table `contacts`
---
-ALTER TABLE `contacts`
-  ADD PRIMARY KEY (`contact_id`);
-
---
 -- Indexes for table `employees`
 --
 ALTER TABLE `employees`
@@ -208,12 +198,6 @@ ALTER TABLE `team_members`
 --
 ALTER TABLE `comments`
   MODIFY `comment_id` int NOT NULL AUTO_INCREMENT COMMENT 'รหัสความคิดเห็น';
-
---
--- AUTO_INCREMENT for table `contacts`
---
-ALTER TABLE `contacts`
-  MODIFY `contact_id` int NOT NULL AUTO_INCREMENT COMMENT 'รหัสวิธีการติดต่อ';
 
 --
 -- AUTO_INCREMENT for table `employees`
