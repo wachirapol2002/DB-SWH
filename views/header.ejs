@@ -9,8 +9,13 @@
             <a class="nav-link text-light" href="/team">Team</a>
             <a class="nav-link text-light" href="/employee">Employee</a>
         </div>
-        <div class="d-flex">
-            <a class="bi bi-person-fill mx-3" style="font-size: 2rem;"></a>
+        <div class="d-flex justify-content-end align-items-center">
+            <% if (typeof login !== 'undefined' && login) { %>
+                <a class="bi bi-person-fill mx-3" style="font-size: 2rem;"> : <%= username %></a>
+                <input class="btn btn-danger btn-lg w-25 mx-3" value="Logout" onclick="location.href='/logout';">
+            <% } else{ %>
+                <a class="bi bi-person-fill mx-3" style="font-size: 2rem;"></a>
+            <% } %>
         </div>
     </div>
 </nav>

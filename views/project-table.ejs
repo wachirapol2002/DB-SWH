@@ -28,121 +28,140 @@
         color: white;
         text-align: center;
     }
+    #add_but{
+        background: #EEE9DA;
+        border-radius: 30px;
+        width: 15%;
+        text-align: center;
+        font-family: 'DM Serif Display';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 33px;
+        padding: 10px;
+    }
+    #add_but:hover{
+        background: hsl(45, 37%, 85%);
+        transition: 0.1s;
+    }
 </style>
 <body>
     <div id="app">
         <main>
-        <div>
-            <h1 class="mx-5 my-4">All Project</h1>
-            <div class="row mx-auto py-4" id="row-table-head">
-                <div class="col-2"  id="row-1col">
-                    Project no.
+            <div class="container-fluid" style="min-height: 80vh;">
+                <div class="row mx-5 my-4">
+                    <h1>Your Requirement</h1>
+                    <div type="button" class="mx-5" id="add_but" onclick="location.href='/project/add';">+ Add new requirement</div>
                 </div>
-                <div class="col-8">
-                    Name
-                </div>
-                <div class="col-2"  id="row-3col">
-                    Status
-                </div>
-            </div>
-            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-2" id="row-1col">
-                        001
+                <div class="row mx-auto py-4" id="row-table-head">
+                    <div class="col-2"  id="row-1col">
+                        Project no.
                     </div>
                     <div class="col-8">
-                        Lavender Haze
+                        Name
+                    </div>
+                    <div class="col-2"  id="row-3col">
+                        Status
+                    </div>
+                </div>
+                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                        <div class="col-2" id="row-1col">
+                            001
+                        </div>
+                        <div class="col-8">
+                            Lavender Haze
+                        </div>
+                        <div class="col-2">
+                            <div class="w-75 mx-auto" id="status-fin">
+                                Finish
+                            </div>
+                        </div>
+                </div>
+                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-2" id="row-1col">
+                        002
+                    </div>
+                    <div class="col-8">
+                        Maroon
                     </div>
                     <div class="col-2">
-                        <div class="w-75 mx-auto" id="status-fin">
-                            Finish
+                        <div class="w-75 mx-auto" id="status-inpro">
+                            In progress
                         </div>
                     </div>
-            </div>
-            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-2" id="row-1col">
-                    002
                 </div>
-                <div class="col-8">
-                    Maroon
+                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-2" id="row-1col">
+                        003
+                    </div>
+                    <div class="col-8">
+                        Anti-Hero
+                    </div>
+                    <div class="col-2">
+                        <div class="w-75 mx-auto" id="status-notsta">
+                            Not Started
+                        </div>
+                    </div>
                 </div>
-                <div class="col-2">
-                    <div class="w-75 mx-auto" id="status-inpro">
-                        In progress
+                <div class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-2" id="row-1col">
+                        
+                    </div>
+                    <div class="col-8">
+                        
+                    </div>
+                    <div class="col-2">
+
+                    </div>
+                </div>
+                <div class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-2" id="row-1col">
+                        
+                    </div>
+                    <div class="col-8">
+                        
+                    </div>
+                    <div class="col-2">
+
+                    </div>
+                </div>
+                <div class="row mx-auto my-4 py-4" id="row-table">
+                    <div class="col-2" id="row-1col">
+                        
+                    </div>
+                    <div class="col-8">
+                        
+                    </div>
+                    <div class="col-2">
+
                     </div>
                 </div>
             </div>
-            <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-2" id="row-1col">
-                    003
-                </div>
-                <div class="col-8">
-                    Anti-Hero
-                </div>
-                <div class="col-2">
-                    <div class="w-75 mx-auto" id="status-notsta">
-                        Not Started
-                    </div>
-                </div>
-            </div>
-            <div class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-2" id="row-1col">
-                    
-                </div>
-                <div class="col-8">
-                    
-                </div>
-                <div class="col-2">
-
-                </div>
-            </div>
-            <div class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-2" id="row-1col">
-                    
-                </div>
-                <div class="col-8">
-                    
-                </div>
-                <div class="col-2">
-
-                </div>
-            </div>
-            <div class="row mx-auto my-4 py-4" id="row-table">
-                <div class="col-2" id="row-1col">
-                    
-                </div>
-                <div class="col-8">
-                    
-                </div>
-                <div class="col-2">
-
-                </div>
-            </div>
-        </div>
-    </main>
-    <%- include('footer') %>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script>
-var app = new Vue({
-el: '#app',
-data: {
-    center:{
-        'd-flex': true,
-        'justify-content-center':true,
-        'align-items-center':true
+        </main>
+        <%- include('footer') %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+    var app = new Vue({
+    el: '#app',
+    data: {
+        center:{
+            'd-flex': true,
+            'justify-content-center':true,
+            'align-items-center':true
+        },
     },
-},
-methods: {
-    
-},
-computed:{
-    
-},
-watch:{
-    
-},
-})
-</script>
+    methods: {
+        
+    },
+    computed:{
+        
+    },
+    watch:{
+        
+    },
+    })
+    </script>
 
 
 </body>
