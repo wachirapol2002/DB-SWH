@@ -2,33 +2,33 @@
 <link rel="stylesheet" href="/css/table.css">
 <%- include('header') %>
 <style>
-    #row-1col{
+    .row-1col{
         text-align: center;
     }
-    #row-3col{
+    .row-3col{
         text-align: center;
     }
-    #status-fin{
+    .status-fin{
         background: #6CD396;
         border-radius: 30px;
         color: white;
         text-align: center;
 
     }
-    #status-inpro{
+    .status-inpro{
         background: #84DCE1;
         border-radius: 30px;
         color: white;
         text-align: center;
 
     }
-    #status-notsta{
+    .status-notsta{
         background: #FF8383;
         border-radius: 30px;
         color: white;
         text-align: center;
     }
-    #add_but{
+    .add_but{
         background: #EEE9DA;
         border-radius: 30px;
         width: 15%;
@@ -40,7 +40,7 @@
         line-height: 33px;
         padding: 10px;
     }
-    #add_but:hover{
+    .add_but:hover{
         background: hsl(45, 37%, 85%);
         transition: 0.1s;
     }
@@ -51,60 +51,77 @@
             <div class="container-fluid" style="min-height: 80vh;">
                 <div class="row mx-5 my-4">
                     <h1>Your Requirement</h1>
-                    <div type="button" class="mx-5" id="add_but" onclick="location.href='/project/add';">+ Add new requirement</div>
+                    <div type="button" class="mx-5" :class="'add_but'" onclick="location.href='/project/add';">+ Add new requirement</div>
                 </div>
-                <div class="row mx-auto py-4" id="row-table-head">
-                    <div class="col-2"  id="row-1col">
+
+                <div class="row mx-auto py-4" :class="'row-table-head'">
+                    <div class="col-2"  :class="'row-1col'">
                         Project no.
                     </div>
                     <div class="col-8">
                         Name
                     </div>
-                    <div class="col-2"  id="row-3col">
+                    <div class="col-2"  :class="'row-3col'">
                         Status
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                        <div class="col-2" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'" v-for="requirement in requirements">
+                    <div class="col-2" :class="'row-1col'">
+                        {{requirement.requirement_id}}
+                    </div>
+                    <div class="col-8">
+                        {{requirement.projectname}}
+                    </div>
+                    <div class="col-2">
+                        <div class="w-75 mx-auto" :class="{
+                        'status-notsta': requirement.requirement_status === 'Not started',
+                        'status-inpro': requirement.requirement_status === 'In progress',
+                        'status-fin': requirement.requirement_status === 'Finish'}">
+                            {{requirement.requirement_status}}
+                        </div>
+                    </div>
+                </div>
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                        <div class="col-2" :class="'row-1col'">
                             001
                         </div>
                         <div class="col-8">
                             Lavender Haze
                         </div>
                         <div class="col-2">
-                            <div class="w-75 mx-auto" id="status-fin">
+                            <div class="w-75 mx-auto" :class="'status-fin'">
                                 Finish
                             </div>
                         </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-2" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-2" :class="'row-1col'">
                         002
                     </div>
                     <div class="col-8">
                         Maroon
                     </div>
                     <div class="col-2">
-                        <div class="w-75 mx-auto" id="status-inpro">
+                        <div class="w-75 mx-auto" :class="'status-inpro'">
                             In progress
                         </div>
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-2" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-2" :class="'row-1col'">
                         003
                     </div>
                     <div class="col-8">
                         Anti-Hero
                     </div>
                     <div class="col-2">
-                        <div class="w-75 mx-auto" id="status-notsta">
+                        <div class="w-75 mx-auto" :class="'status-notsta'">
                             Not Started
                         </div>
                     </div>
                 </div>
-                <div class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-2" id="row-1col">
+                <div class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-2" :class="'row-1col'">
                         
                     </div>
                     <div class="col-8">
@@ -114,8 +131,8 @@
 
                     </div>
                 </div>
-                <div class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-2" id="row-1col">
+                <div class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-2" :class="'row-1col'">
                         
                     </div>
                     <div class="col-8">
@@ -125,8 +142,8 @@
 
                     </div>
                 </div>
-                <div class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-2" id="row-1col">
+                <div class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-2" :class="'row-1col'">
                         
                     </div>
                     <div class="col-8">
@@ -150,11 +167,22 @@
             'justify-content-center':true,
             'align-items-center':true
         },
+        requirements: JSON.parse(`<%- requirement %>`),
     },
     methods: {
         
     },
     computed:{
+        // computedBlogs (){
+        //   let results = this.blogs
+        //   return results.map((blog) =>{
+        //     if (blog.content.length > 200){
+        //       blog.content = blog.content.substring(0, 200) + '...'
+        //     }
+        //     return blog
+        //   })
+        // }
+
         
     },
     watch:{

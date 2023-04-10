@@ -11,13 +11,26 @@ const ifNotLoggedin = (req, res, next) => {
 }
 
 //หน้าตาราง Project
-router.get('/', ifNotLoggedin, (req, res) => {
-    let data = {
-        username: req.session.username,
-        permission: req.session.permission,
-        login: req.session.login
+router.get('/', ifNotLoggedin, async function (req, res, next) {
+    const username = req.session.username;
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        const [rows] = await conn.query("SELECT * FROM requirements WHERE username = ?", [username]);
+        let data = {
+            username: req.session.username,
+            permission: req.session.permission,
+            login: req.session.login,
+            requirement: JSON.stringify(rows)
+        }
+        console.log(data)
+        await conn.commit();
+        res.render('project-table', data)
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
     }
-    res.render('project-table', data)
 })
 
 //หน้าเพิ่ม Project
@@ -46,8 +59,6 @@ router.post("/add", async function (req, res, next) {
     const projectTimeframe = req.body.projectTimeframe;
     const projectOwnerContact = req.body.projectOwnerContact;
     const username = req.session.username;
-    console.log(req.session)
-    console.log(req.body);
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {

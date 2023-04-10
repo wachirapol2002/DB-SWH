@@ -2,20 +2,20 @@
 <link rel="stylesheet" href="/css/table.css">
 <%- include('header') %>
 <style>
-    #row-1col{
+    .row-1col{
         left: 3%;
     }
-    #row-2col{
+    .row-2col{
         justify-items: right;
     }
-    #icon{
+    .icon{
         color:#6096B4;
     }
-    #icon:hover{
+    .icon:hover{
         color:hsl(201, 36%, 30%);
         transition: 0.1s;
     }
-    #add_but{
+    .add_but{
         background: #EEE9DA;
         border-radius: 30px;
         width: 15%;
@@ -27,7 +27,7 @@
         line-height: 33px;
         padding: 10px;
     }
-    #add_but:hover{
+    .add_but:hover{
         background: hsl(45, 37%, 85%);
         transition: 0.1s;
     }
@@ -39,58 +39,58 @@
                 <div class="row mx-5 my-4">
                     <!-- Team Name Can Change Follow Name of Team -->
                     <h1>Team Name</h1>
-                    <div type="button" class="mx-5" id="add_but">+ Add new person</div>
+                    <div type="button" class="mx-5" :class="'add_but'">+ Add new person</div>
                 </div>
-                <div class="row mx-auto py-4" id="row-table-head">
-                    <div class="col-5"  id="row-1col">
+                <div class="row mx-auto py-4" :class="'row-table-head'">
+                    <div class="col-5"  :class="'row-1col'">
                         Name
                     </div>
                     <div class="col-7">
                         Roles
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
                         Mark Hendry
                     </div>
                     <div class="col-7">
                         Project Manager
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
                         Camera Bluehawaii
                     </div>
                     <div class="col-7">
                         Developer
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
                         Kawaii Baby
                     </div>
                     <div class="col-7">
                         Tester
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
 
                     </div>
                     <div class="col-7">
 
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
 
                     </div>
                     <div class="col-7">
 
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
 
                     </div>
                     <div class="col-7">

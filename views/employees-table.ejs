@@ -2,20 +2,23 @@
 <link rel="stylesheet" href="/css/table.css">
 <%- include('header') %>
 <style>
-    #row-1col{
+    .row-1col{
         left: 3%;
     }
-    #row-2col{
+    .row-2col{
         justify-items: right;
     }
-    #icon{
+    .row-3col{
+        text-align: center;
+    }
+    .icon{
         color:#6096B4;
     }
-    #icon:hover{
+    .icon:hover{
         color:hsl(201, 36%, 30%);
         transition: 0.1s;
     }
-    #add_but{
+    .add_but{
         background: #EEE9DA;
         border-radius: 30px;
         width: 15%;
@@ -27,7 +30,7 @@
         line-height: 33px;
         padding: 10px;
     }
-    #add_but:hover{
+    .add_but:hover{
         background: hsl(45, 37%, 85%);
         transition: 0.1s;
     }
@@ -38,82 +41,82 @@
             <div class="container-fluid" style="min-height: 80vh;">
                 <div class="row mx-5 my-4">
                     <h1>Employees</h1>
-                    <div type="button" class="mx-5" id="add_but">+ Add new person</div>
+                    <div type="button" class="mx-5" :class="'add_but'">+ Add new person</div>
                 </div>
-                <div class="row mx-auto py-4" id="row-table-head">
-                    <div class="col-5"  id="row-1col">
+                <div class="row mx-auto py-4" :class="'row-table-head'">
+                    <div class="col-5" :class="'row-1col'">
                         Name
                     </div>
                     <div class="col-7">
                         Roles
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                        <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                        <div class="col-5" :class="'row-1col'">
                             Mark Hendry
                         </div>
                         <div class="col-5">
                             Project Manager
                         </div>
-                        <div class="col-2" id="row-3col">
-                            <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
-                            <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                        <div class="col-2" :class="'row-3col'">
+                            <a class="bi bi-gear-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
+                            <a class="bi bi-trash3-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
                         </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
                         Camera Bluehawaii
                     </div>
                     <div class="col-5">
                         Developer
                     </div>
-                    <div class="col-2" id="row-3col">
-                        <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
-                        <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                    <div class="col-2" :class="'row-3col'">
+                        <a class="bi bi-gear-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
+                        <a class="bi bi-trash3-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
                         Kawaii Baby
                     </div>
                     <div class="col-5">
                         Tester
                     </div>
-                    <div class="col-2" id="row-3col">
-                        <a class="bi bi-gear-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
-                        <a class="bi bi-trash3-fill mx-4" id="icon" href="#" style="font-size: 2rem;"></a>
+                    <div class="col-2" :class="'row-3col'">
+                        <a class="bi bi-gear-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
+                        <a class="bi bi-trash3-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
 
                     </div>
                     <div class="col-5">
 
                     </div>
-                    <div class="col-2" id="row-3col">
+                    <div class="col-2" :class="'row-3col'">
 
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
 
                     </div>
                     <div class="col-5">
 
                     </div>
-                    <div class="col-2" id="row-3col">
+                    <div class="col-2" :class="'row-3col'">
 
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" id="row-table">
-                    <div class="col-5" id="row-1col">
+                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-5" :class="'row-1col'">
 
                     </div>
                     <div class="col-5">
                         
                     </div>
-                    <div class="col-2" id="row-3col">
+                    <div class="col-2" :class="'row-3col'">
 
                     </div>
                 </div>

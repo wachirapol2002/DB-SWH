@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2023 at 10:21 PM
+-- Generation Time: Apr 10, 2023 at 11:30 PM
 -- Server version: 8.0.32
 -- PHP Version: 8.2.0
 
@@ -47,8 +47,8 @@ INSERT INTO `accounts` (`username`, `password`, `permission`) VALUES
 --
 
 CREATE TABLE `comments` (
-  `comment_id` int NOT NULL COMMENT 'รหัสความคิดเห็น',
-  `requirement_id` int NOT NULL COMMENT 'รหัสความต้องการ',
+  `comment_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสความคิดเห็น',
+  `requirement_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสความต้องการ',
   `username` varchar(30) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
   `message` varchar(300) NOT NULL COMMENT 'ข้อความ',
   `comment_timestamp` timestamp NOT NULL COMMENT 'บันทึกเวลา'
@@ -61,7 +61,7 @@ CREATE TABLE `comments` (
 --
 
 CREATE TABLE `employees` (
-  `employee_id` int NOT NULL COMMENT 'รหัสพนักงาน',
+  `employee_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสพนักงาน',
   `first_name` varchar(30) NOT NULL COMMENT 'ชื่อ',
   `last_name` varchar(30) NOT NULL COMMENT 'นามสกุล',
   `email` varchar(50) NOT NULL COMMENT 'อีเมล',
@@ -76,8 +76,8 @@ CREATE TABLE `employees` (
 --
 
 CREATE TABLE `projects` (
-  `project_id` int NOT NULL COMMENT 'รหัสโครงการ',
-  `requirement_id` int NOT NULL COMMENT 'รหัสความต้องการ',
+  `project_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสโครงการ',
+  `requirement_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสความต้องการ',
   `team_name` varchar(30) NOT NULL COMMENT 'ชื่อทีมที่รับผิดชอบ',
   `deadline` date NOT NULL COMMENT 'กำหนดการ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางโครงการ';
@@ -89,8 +89,8 @@ CREATE TABLE `projects` (
 --
 
 CREATE TABLE `project_status` (
-  `project_status_id` int NOT NULL COMMENT 'รหัสสถานะโครงการ',
-  `project_id` int NOT NULL COMMENT 'รหัสโครงการ',
+  `project_status_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสสถานะโครงการ',
+  `project_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสโครงการ',
   `status_message` varchar(30) NOT NULL COMMENT 'ข้อความสถานะ',
   `status_timestamp` timestamp NOT NULL COMMENT 'บันทึกเวลา'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางเก็บสถานะโครงการ';
@@ -102,7 +102,7 @@ CREATE TABLE `project_status` (
 --
 
 CREATE TABLE `requirements` (
-  `requirement_id` int NOT NULL COMMENT 'รหัสความต้องการ',
+  `requirement_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสความต้องการ',
   `username` varchar(30) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
   `projectname` varchar(30) NOT NULL COMMENT 'ชื่อโครงการ',
   `detail` varchar(5000) NOT NULL COMMENT 'รายละเอียดโครงการ',
@@ -119,7 +119,7 @@ CREATE TABLE `requirements` (
 --
 
 CREATE TABLE `teams` (
-  `team_name` int NOT NULL COMMENT 'ชื่อทีม',
+  `team_name` varchar(30) NOT NULL COMMENT 'ชื่อทีม',
   `total_members` int NOT NULL COMMENT 'จำนวนสมาชิก',
   `total_projects` int NOT NULL COMMENT 'จำนวนโครงการที่รับผิดชอบ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางทีม';
@@ -131,9 +131,9 @@ CREATE TABLE `teams` (
 --
 
 CREATE TABLE `team_members` (
-  `team_members_id` int NOT NULL COMMENT 'รหัสสมาชิกทีม',
+  `team_members_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสสมาชิกทีม',
   `team_name` varchar(30) NOT NULL COMMENT 'ชื่อทีม',
-  `employee_id` int NOT NULL COMMENT 'รหัสพนักงาน',
+  `employee_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสพนักงาน',
   `role` varchar(30) NOT NULL COMMENT 'บทบาทในทีม'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางสมาชิกทีม';
 
@@ -151,7 +151,9 @@ ALTER TABLE `accounts`
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
-  ADD PRIMARY KEY (`comment_id`);
+  ADD PRIMARY KEY (`comment_id`),
+  ADD KEY `comments_accounts` (`username`),
+  ADD KEY `comments_requirements` (`requirement_id`);
 
 --
 -- Indexes for table `employees`
@@ -163,19 +165,23 @@ ALTER TABLE `employees`
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
-  ADD PRIMARY KEY (`project_id`);
+  ADD PRIMARY KEY (`project_id`),
+  ADD KEY `projects_requirements` (`requirement_id`),
+  ADD KEY `projects_teams` (`team_name`);
 
 --
 -- Indexes for table `project_status`
 --
 ALTER TABLE `project_status`
-  ADD PRIMARY KEY (`project_status_id`);
+  ADD PRIMARY KEY (`project_status_id`),
+  ADD KEY `project_status` (`project_id`);
 
 --
 -- Indexes for table `requirements`
 --
 ALTER TABLE `requirements`
-  ADD PRIMARY KEY (`requirement_id`);
+  ADD PRIMARY KEY (`requirement_id`),
+  ADD KEY `requirements_username` (`username`);
 
 --
 -- Indexes for table `teams`
@@ -187,7 +193,9 @@ ALTER TABLE `teams`
 -- Indexes for table `team_members`
 --
 ALTER TABLE `team_members`
-  ADD PRIMARY KEY (`team_members_id`);
+  ADD PRIMARY KEY (`team_members_id`),
+  ADD KEY `team_members_teams` (`team_name`),
+  ADD KEY `team_members_employees` (`employee_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -197,43 +205,74 @@ ALTER TABLE `team_members`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT COMMENT 'รหัสความคิดเห็น';
+  MODIFY `comment_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'รหัสความคิดเห็น';
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int NOT NULL AUTO_INCREMENT COMMENT 'รหัสพนักงาน';
+  MODIFY `employee_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'รหัสพนักงาน';
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` int NOT NULL AUTO_INCREMENT COMMENT 'รหัสโครงการ';
+  MODIFY `project_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'รหัสโครงการ';
 
 --
 -- AUTO_INCREMENT for table `project_status`
 --
 ALTER TABLE `project_status`
-  MODIFY `project_status_id` int NOT NULL AUTO_INCREMENT COMMENT 'รหัสสถานะโครงการ';
+  MODIFY `project_status_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'รหัสสถานะโครงการ';
 
 --
 -- AUTO_INCREMENT for table `requirements`
 --
 ALTER TABLE `requirements`
-  MODIFY `requirement_id` int NOT NULL AUTO_INCREMENT COMMENT 'รหัสความต้องการ';
-
---
--- AUTO_INCREMENT for table `teams`
---
-ALTER TABLE `teams`
-  MODIFY `team_name` int NOT NULL AUTO_INCREMENT COMMENT 'ชื่อทีม';
+  MODIFY `requirement_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'รหัสความต้องการ';
 
 --
 -- AUTO_INCREMENT for table `team_members`
 --
 ALTER TABLE `team_members`
-  MODIFY `team_members_id` int NOT NULL AUTO_INCREMENT COMMENT 'รหัสสมาชิกทีม';
+  MODIFY `team_members_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'รหัสสมาชิกทีม';
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_accounts` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comments_requirements` FOREIGN KEY (`requirement_id`) REFERENCES `requirements` (`requirement_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `projects`
+--
+ALTER TABLE `projects`
+  ADD CONSTRAINT `projects_requirements` FOREIGN KEY (`requirement_id`) REFERENCES `requirements` (`requirement_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `projects_teams` FOREIGN KEY (`team_name`) REFERENCES `teams` (`team_name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `project_status`
+--
+ALTER TABLE `project_status`
+  ADD CONSTRAINT `project_status` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `requirements`
+--
+ALTER TABLE `requirements`
+  ADD CONSTRAINT `requirements_username` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `team_members`
+--
+ALTER TABLE `team_members`
+  ADD CONSTRAINT `team_members_employees` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `team_members_teams` FOREIGN KEY (`team_name`) REFERENCES `teams` (`team_name`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

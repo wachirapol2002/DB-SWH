@@ -25,6 +25,8 @@ Database Project Software House Management
      database: '',          // ชื่อ DB
      ...
    });
+   ที่ไฟล์ swh_db SET time_zone = "+07:00";
+   Query เพื่อตั้ง time zone ด้วย
    ```
 5. ทดลองใช้งาน
    ```sh
