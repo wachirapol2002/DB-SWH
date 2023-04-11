@@ -20,8 +20,8 @@
                           <textarea class="form-control" id="projectDetails" name="projectDetails" rows="4" v-model="projectDetails"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="projectTimeframe">รายละเอียด วัน-เวลาที่ต้องการโปรเจค</label>
-                            <input type="text" class="form-control" name="projectTimeframe" id="projectTimeframe" v-model="projectTimeframe">
+                            <label for="projectBudget">งบประมาณ</label>
+                            <input type="text" class="form-control" name="projectBudget" id="projectBudget" v-model="projectBudget">
                         </div>
                         <div class="form-group">
                             <label for="projectOwnerContact">ช่องทางการติดต่อ</label>
@@ -48,7 +48,7 @@
     data: {
         projectName: "",
         projectDetails: "",
-        projectTimeframe: "",
+        projectBudget: "",
         projectOwnerContact: "",
         center:{
             'd-flex': true,

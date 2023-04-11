@@ -38,16 +38,27 @@
             <div class="container-fluid" style="min-height: 80vh;">
                 <div class="row mx-5 my-4">
                     <h1>All Teams</h1>
-                    <div type="button" class="mx-5" :class="'add_but'">+ Create new team</div>
+                    <div type="button" class="mx-5" :class="'add_but'" onclick="location.href='/team/create';">+ Create new team</div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                        <div class="col-10" :class="'row-1col'">
-                            Akasuki Team
-                        </div>
-                        <div class="col-2" :class="'row-2col'">
-                            <a class="bi bi-gear-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
-                            <a class="bi bi-trash3-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
-                        </div>
+                <template v-for="team in teams">
+                    <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                            <div class="col-10" :class="'row-1col'">
+                                {{team.team_name}}
+                            </div>
+                            <div class="col-2" :class="'row-2col'">
+                                <a class="bi bi-gear-fill mx-4" :class="'icon'" href="get" style="font-size: 2rem;"></a>
+                                <a class="bi bi-trash3-fill mx-4" :class="'icon'" :href="'/team/del/'+team.team_name" style="font-size: 2rem;"></a>
+                            </div>
+                    </div>
+                </template>
+                <!-- <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                    <div class="col-10" :class="'row-1col'">
+                        Akasuki Team
+                    </div>
+                    <div class="col-2" :class="'row-2col'">
+                        <a class="bi bi-gear-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
+                        <a class="bi bi-trash3-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
+                    </div>
                 </div>
                 <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
                     <div class="col-10" :class="'row-1col'">
@@ -90,7 +101,7 @@
                     <div class="col-2" :class="'row-2col'">
 
                     </div>
-                </div>
+                </div> -->
             </div>
         </main>
         <%- include('footer') %>
@@ -105,9 +116,12 @@
             'justify-content-center':true,
             'align-items-center':true
         },
+        teams: JSON.parse(`<%- teams %>`),
     },
     methods: {
-        
+        del(teamName){
+            location.href="/project/"+id+"/detail";
+        }
     },
     computed:{
         

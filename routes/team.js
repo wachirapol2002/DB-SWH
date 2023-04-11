@@ -11,17 +11,28 @@ const ifNotLoggedin = (req, res, next) => {
 }
 
 //หน้าตาราง ทีม
-router.get('/', ifNotLoggedin, (req, res) => {
-    var data = { title: '', data: 'data' }
-    res.render('team-table', {
-        username: req.session.username,
-        permission: req.session.permission,
-        login: req.session.login
-    })
+router.get('/', ifNotLoggedin, async function (req, res, next) {
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        const [rows] = await conn.query("SELECT * FROM teams");
+        let data = {
+            username: req.session.username,
+            permission: req.session.permission,
+            login: req.session.login,
+            teams: JSON.stringify(rows)
+        }
+        await conn.commit();
+        res.render('team-table', data)
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
+    }
 })
 
 //หน้าสร้าง ทีม
-router.get('/create', ifNotLoggedin, (req, res) => {
+router.get('/create', ifNotLoggedin, async function (req, res, next) {
     let data = {
         username: req.session.username,
         permission: req.session.permission,
@@ -30,8 +41,20 @@ router.get('/create', ifNotLoggedin, (req, res) => {
     res.render('project-create-team', data)
 })
 
+//หน้าลบ Team
+router.get('/del/:teamName', ifNotLoggedin, async function (req, res, next) {
+    const team_name = req.params.teamName
+    let data = {
+        username: req.session.username,
+        permission: req.session.permission,
+        login: req.session.login,
+        teamName: team_name
+    }
+    res.render('team-del', data)
+})
+
 //หน้าปรับแต่งทีม
-router.get('/edit', ifNotLoggedin, (req, res) => {
+router.get('/edit', ifNotLoggedin, async function (req, res, next) {
     let data = {
         username: req.session.username,
         permission: req.session.permission,
@@ -41,7 +64,7 @@ router.get('/edit', ifNotLoggedin, (req, res) => {
 })
 
 //หน้าเพิ่มสมาชิกทีม
-router.get('/add', ifNotLoggedin, (req, res) => {
+router.get('/add', ifNotLoggedin, async function (req, res, next) {
     let data = {
         username: req.session.username,
         permission: req.session.permission,
@@ -51,7 +74,7 @@ router.get('/add', ifNotLoggedin, (req, res) => {
 })
 
 //หน้ารายละเอียดทีม
-router.get('/detail', ifNotLoggedin, (req, res) => {
+router.get('/detail', ifNotLoggedin, async function (req, res, next) {
     let data = {
         username: req.session.username,
         permission: req.session.permission,
@@ -59,6 +82,40 @@ router.get('/detail', ifNotLoggedin, (req, res) => {
     }
     res.render('team-details-table', data)
 })
+
+//สร้าง team
+router.post("/create", async function (req, res, next) {
+    const teamName = req.body.teamName;
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        await conn.query("INSERT INTO teams(team_name, total_members, total_projects) VALUES(?, 0, 0);", 
+        [teamName]);
+        await conn.commit();
+        res.redirect('/team');
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
+    }
+  });
+
+//ลบ team
+router.post("/del/:teamName", async function (req, res, next) {
+    const teamName = req.params.teamName;
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        await conn.query("DELETE FROM teams WHERE team_name = (?);", 
+        [teamName]);
+        await conn.commit();
+        res.redirect('/team');
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
+    }
+});
 
 
 

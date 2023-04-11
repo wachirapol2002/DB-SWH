@@ -17,12 +17,12 @@ const ifLoggedin = (req,res,next) => {
 }
 
 //หน้า root ไป ตาราง Project ถ้า login แล้ว
-router.get('/', ifNotLoggedin, (req, res) => {
+router.get('/', ifNotLoggedin, async function (req, res, next) {
     res.redirect('/project/')
 })
 
 //หน้า สมัครบัญชี
-router.get('/register', ifLoggedin,(req, res) => {
+router.get('/register', ifLoggedin,async function (req, res, next) {
     let data = {
         username: req.session.username,
         permission: req.session.permission,

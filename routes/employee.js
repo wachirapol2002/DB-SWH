@@ -9,7 +9,7 @@ const ifNotLoggedin = (req, res, next) => {
     next();
 }
 
-router.get('/', ifNotLoggedin, (req, res) => {
+router.get('/', ifNotLoggedin, async function (req, res, next) {
     let data = {
         username: req.session.username,
         permission: req.session.permission,
@@ -18,7 +18,7 @@ router.get('/', ifNotLoggedin, (req, res) => {
     res.render('employees-table', data)
 })
 
-router.get('/add', ifNotLoggedin, (req, res) => {
+router.get('/add', ifNotLoggedin, async function (req, res, next) {
     let data = {
         username: req.session.username,
         permission: req.session.permission,
@@ -27,7 +27,7 @@ router.get('/add', ifNotLoggedin, (req, res) => {
     res.render('project-create-employee', data)
 })
 
-router.get('/edit', ifNotLoggedin,(req, res) => {
+router.get('/edit', ifNotLoggedin,async function (req, res, next) {
     let data = {
         username: req.session.username,
         permission: req.session.permission,
