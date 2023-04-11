@@ -41,7 +41,7 @@
             <div class="container-fluid" style="min-height: 80vh;">
                 <div class="row mx-5 my-4">
                     <h1>Employees</h1>
-                    <div type="button" class="mx-5" :class="'add_but'">+ Add new person</div>
+                    <div type="button" class="mx-5" :class="'add_but'" onclick="location.href='/employee/add';">+ Add new person</div>
                 </div>
                 <div class="row mx-auto py-4" :class="'row-table-head'">
                     <div class="col-5" :class="'row-1col'">
@@ -51,7 +51,21 @@
                         Roles
                     </div>
                 </div>
-                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                <template v-for="employee in employees">
+                    <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
+                        <div class="col-5" :class="'row-1col'">
+                            {{employee.first_name+" "+employee.last_name}}
+                        </div>
+                        <div class="col-5">
+                            {{employee.job}}
+                        </div>
+                        <div class="col-2" :class="'row-3col'">
+                            <a class="bi bi-gear-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
+                            <a class="bi bi-trash3-fill mx-4" :class="'icon'" :href="'/employee/del/'+employee_id" style="font-size: 2rem;"></a>
+                        </div>
+                    </div>
+                </template>
+                <!-- <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
                         <div class="col-5" :class="'row-1col'">
                             Mark Hendry
                         </div>
@@ -119,7 +133,7 @@
                     <div class="col-2" :class="'row-3col'">
 
                     </div>
-                </div>
+                </div> -->
             </div>
         </main>
         <%- include('footer') %>
@@ -134,6 +148,7 @@
             'justify-content-center':true,
             'align-items-center':true
         },
+        employees: JSON.parse(`<%- employees %>`),
     },
     methods: {
         

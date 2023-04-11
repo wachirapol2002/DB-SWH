@@ -41,7 +41,7 @@ router.get('/create', ifNotLoggedin, async function (req, res, next) {
     res.render('project-create-team', data)
 })
 
-//หน้าลบ Team
+//หน้าลบ ทีม
 router.get('/del/:teamName', ifNotLoggedin, async function (req, res, next) {
     const team_name = req.params.teamName
     let data = {

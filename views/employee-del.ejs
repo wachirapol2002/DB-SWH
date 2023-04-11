@@ -1,0 +1,48 @@
+<%- include('head') %>
+<%- include('header') %>
+<body>
+    <div id="app">
+        <main>
+            <div class="container-fluid" :class="center" style="min-height: 80vh;">
+                <div class="container-fluid pt-2 pl-5 pr-5 pb-5 mt-5" style="width: 75vw; border-radius: 25px; background-color: #e7e7e7;">
+                    <div class="col text-center my-2" style="color:rgb(96, 150, 180); font-size: 1.6rem;">
+                        Delete Employee 
+                    </div>
+                    <!-- <form action="" method="POST"> -->
+                    <form action="" method="POST">
+                        <div class="mt-5" :class="center">
+                            <button type="submit" class="btn btn-danger btn-lg mx-3">Confirm</button>
+                            <button type="button" class="btn btn-light btn-lg mx-3" onclick="location.href='/employee';">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="container-fluid" style="min-height: 2rem;"></div>
+        </main>
+        <%- include('footer') %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+    var app = new Vue({
+    el: '#app',
+    data: {
+        center:{
+            'd-flex': true,
+            'justify-content-center':true,
+            'align-items-center':true
+        },
+        employee: JSON.parse(`<%- employee %>`),
+    },
+    methods: {
+        
+    },
+    computed:{
+        
+    },
+    watch:{
+        
+    },
+})
+    </script>
+</body>
+</html>
