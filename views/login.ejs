@@ -1,17 +1,16 @@
 <%- include('head') %>
 <link rel="stylesheet" href="/css/login.css">
-<%- include('header') %>
-<body>
+<body style="background-image: linear-gradient(#60B4A8, #EEE9DA);">
     <div id="app">
         <main>
-            <div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-                <div class="login">
-                    <h1 class="text-center">
-                        Sign In
-                    </h1>
-    
+            <div class="container-fluid d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh;">
+                <div class="text-white text-center mb-2">
+                    <img style="width: 80px;" src="/image/icon.png"><br>
+                    Welcome to Software House Management!<br>Enter your personal details and Start journey with us
+                </div>
+                <div class="login bg-light" style="width: 650px;">
                     <form class="needs-validation" name="login" action="/login" onsubmit="return validateForm()" method="POST">
-                        <div class="form-group was-validated">
+                        <div class="form-group was-validated" style="padding-left: 30px; padding-right: 30px;  padding-top: 20px;">
                             <label class="form-label" for="username">Username</label>
                             <input class="form-control" type="text" id="username" name="username" required placeholder="ชื่อผู้ใช้" maxlength="30" v-model="username">
                             <div class="invalid-feedback">
@@ -19,7 +18,7 @@
                             </div>
                         </div>
     
-                        <div class="form-group was-validated">
+                        <div class="form-group was-validated" style="padding-left: 30px; padding-right: 30px;">
                             <label class="form-label" for="password">Password</label>
                             <input class="form-control" :type="showPassword ? 'text' : 'password'" id="password" name="password" required placeholder="รหัสผ่าน" maxlength="20" v-model="password">
                             <div class="invalid-feedback">
@@ -27,19 +26,24 @@
                             </div>
                         </div>
     
-                        <div class="form-group form-check">
+                        <div class="form-check" style="padding-left: 50px; padding-right: 30px;">
                             <input class="form-check-input" type="checkbox" id="check" v-model="showPassword">
-                            <label class="form-check-label" for="showpass">Show Password</label>
+                            <label class="form-check-label" style="font-size: 17px;" for="showpass">Show Password</label>
                         </div>
     
-                        <input class="btn btn-success w-100" type="submit" value="SIGN IN">
-                        <label for="">Create an account</label>
-                        <label for="" style="color: blue">Sign Up Now</label>
+                        <div class="form-group d-flex justify-content-center">
+                            <input class="btn btn-primary" type="submit" value="Sign In">
+                        </div>
+
+                        <div class="form-group justify-content-center text-center">
+                            <label style="font-size: 17px;">Create an account</label>
+                            <a class="btn btn-link" value="Sign Up Now" href="/register">Sign Up Now</a>
+                        </div>
+                        
                     </form>
                 </div>
             </div>
         </main>
-        <%- include('footer') %>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
