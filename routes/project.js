@@ -65,6 +65,16 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
     }
 })
 
+//หน้าเพิ่มทีม
+router.get('/addteam', ifNotLoggedin, async function (req, res, next) {
+    let data = {
+        username: req.session.username,
+        permission: req.session.permission,
+        login: req.session.login
+    }
+    res.render('project-add-team', data)
+})
+
 //เพิ่มRequirements
 router.post("/add", async function (req, res, next) {
     const projectName = req.body.projectName;
