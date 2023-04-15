@@ -49,11 +49,13 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
     await conn.beginTransaction();
     try {
         const [rows] = await conn.query("SELECT * FROM requirements WHERE requirement_id = ?", [id]);
+        const [rows2] = await conn.query("SELECT * FROM comments WHERE requirement_id = ?", [id]);
         let data = {
             username: req.session.username,
             permission: req.session.permission,
             login: req.session.login,
-            requirement: JSON.stringify(rows[0])
+            requirement: JSON.stringify(rows[0]),
+            comments: JSON.stringify(rows2)
         }
         console.log(data)
         await conn.commit();
@@ -94,6 +96,47 @@ router.post("/add", async function (req, res, next) {
     } finally {
         conn.release();
     }
-  });
+});
+
+
+// Get comments
+router.get("/:id/comments", async function (req, res, next) {
+    try {
+        const [rows, fields] = await pool.query(
+            "SELECT * FROM comments WHERE requirement_id=?",
+            [req.params.id]
+        );
+
+        res.json(rows);
+        console.log(rows)
+    } catch (error) {
+        console.log(error)
+    }
+});
+
+// Create new comment
+const bodyParser = require('body-parser').json();
+router.post("/:id/comment", bodyParser, async function (req, res, next) {
+    const username = 'admin';
+    try {
+        const [rows, fields] = await pool.query(
+            "INSERT INTO comments (requirement_id, username, message, comment_timestamp) VALUES(?, ?, ?, NOW())",
+            [req.params.id, req.session.username, req.body.message]
+        );
+        console.log({
+            comment_id: rows.insertId,
+            requirement_id: req.params.id,
+            username: req.session.username,
+            message: req.body.message,
+            timestamp: Date.now(),
+        });
+        res.redirect('/project/' + req.params.id + '/detail')
+    } catch (error) {
+        console.log(error);
+
+        res.json(error);
+        return next(error);
+    }
+});
 
 module.exports = router
