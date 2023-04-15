@@ -16,7 +16,8 @@ Database Project Software House Management
    ```sh
    npm install
    ```
-4. ตั้งค่า DB โดยแก้ไขไฟล์ `conDB.js`
+4. ตั้งค่า DB โดย copy/paste ไฟล์ `conDB_example.js` แล้วเปลี่ยนชื่อไฟล์ที่ copy มาเป็น `conDB.js`
+   แล้วแก้ไข้ข้อมูล `user`, `password` และ `database` ในไฟล์ `conDB.js`
    ```js
    const pool = mysql.createPool({
      host: 'localhost',
@@ -25,8 +26,6 @@ Database Project Software House Management
      database: '',          // ชื่อ DB
      ...
    });
-   ที่ไฟล์ swh_db SET time_zone = "+07:00";
-   Query เพื่อตั้ง time zone ด้วย
    ```
 5. ทดลองใช้งาน
    ```sh

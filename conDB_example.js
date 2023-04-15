@@ -6,11 +6,10 @@ const pool = mysql.createPool({
   user: 'root',
   password: '',
   //database name
-  database: 'project_data',
+  database: 'swh_db',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0,
-  port: 3307
+  queueLimit: 0
 });
 
 module.exports = pool;
