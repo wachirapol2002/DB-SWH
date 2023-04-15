@@ -48,18 +48,34 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
-        const [rows] = await conn.query("SELECT * FROM requirements WHERE requirement_id = ?", [id]);
-        const [rows2] = await conn.query("SELECT * FROM comments WHERE requirement_id = ?", [id]);
-        let data = {
-            username: req.session.username,
-            permission: req.session.permission,
-            login: req.session.login,
-            requirement: JSON.stringify(rows[0]),
-            comments: JSON.stringify(rows2)
+        const [requirement] = await conn.query("SELECT * FROM requirements WHERE requirement_id = ?", [id]);
+        const [comments] = await conn.query("SELECT * FROM comments WHERE requirement_id = ?", [id]);
+        if(requirement[0].requirement_status != 'Not started'){
+            const [project] = await conn.query("SELECT * FROM projects WHERE requirement_id = ?", [id]);
+            let data = {
+                username: req.session.username,
+                permission: req.session.permission,
+                login: req.session.login,
+                requirement: JSON.stringify(requirement[0]),
+                project: JSON.stringify(project[0]),
+                comments: JSON.stringify(comments)
+            }
+            console.log(project)
+            await conn.commit();
+            res.render('project-details', data)
+        }else{
+            let data = {
+                username: req.session.username,
+                permission: req.session.permission,
+                login: req.session.login,
+                requirement: JSON.stringify(requirement[0]),
+                project: {team_name: '-', deadline: '-'},
+                comments: JSON.stringify(comments)
+            }
+            await conn.commit();
+            res.render('project-details', data)
         }
-        console.log(data)
-        await conn.commit();
-        res.render('project-details', data)
+
     } catch (err) {
         await conn.rollback();
     } finally {
@@ -68,13 +84,49 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
 })
 
 //หน้าเพิ่มทีมรับผิดชอบ
-router.get('/addteam', ifNotLoggedin, async function (req, res, next) {
-    let data = {
-        username: req.session.username,
-        permission: req.session.permission,
-        login: req.session.login
+router.get('/:requirementId/addteam', ifNotLoggedin, async function (req, res, next) {
+    const requirementId = req.params.requirementId
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        const [rows] = await conn.query("SELECT * FROM teams");
+        let data = {
+            username: req.session.username,
+            permission: req.session.permission,
+            login: req.session.login,
+            requirementId: requirementId,
+            teams: JSON.stringify(rows)
+        }
+        console.log(data)
+        console.log(requirementId)
+        await conn.commit();
+        res.render('project-add-team', data)
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
     }
-    res.render('project-add-team', data)
+})
+
+//เพิ่มทีมรับผิดชอบ
+router.post('/:requirementId/addteam', ifNotLoggedin, async function (req, res, next) {
+    const requirementId = req.params.requirementId
+    const teamName = req.body.teamName;
+    const dateLine = req.body.dateLine;
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        await conn.query("INSERT INTO projects (project_id, requirement_id, team_name, deadline) VALUES (NULL, ?, ?, ?);",
+        [requirementId, teamName, dateLine]);
+        await conn.query("UPDATE requirements SET requirement_status = 'In progress' WHERE requirement_id = ?;", 
+        [requirementId]);
+        await conn.commit();
+        res.redirect('/project/'+requirementId+'/detail')
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
+    }
 })
 
 //เพิ่มRequirements
@@ -106,11 +158,8 @@ router.get("/:id/comments", async function (req, res, next) {
             "SELECT * FROM comments WHERE requirement_id=?",
             [req.params.id]
         );
-
         res.json(rows);
-        console.log(rows)
     } catch (error) {
-        console.log(error)
     }
 });
 
@@ -123,17 +172,15 @@ router.post("/:id/comment", bodyParser, async function (req, res, next) {
             "INSERT INTO comments (requirement_id, username, message, comment_timestamp) VALUES(?, ?, ?, NOW())",
             [req.params.id, req.session.username, req.body.message]
         );
-        console.log({
-            comment_id: rows.insertId,
-            requirement_id: req.params.id,
-            username: req.session.username,
-            message: req.body.message,
-            timestamp: Date.now(),
-        });
+        // console.log({
+        //     comment_id: rows.insertId,
+        //     requirement_id: req.params.id,
+        //     username: req.session.username,
+        //     message: req.body.message,
+        //     timestamp: Date.now(),
+        // });
         res.redirect('/project/' + req.params.id + '/detail')
     } catch (error) {
-        console.log(error);
-
         res.json(error);
         return next(error);
     }

@@ -10,27 +10,24 @@
                         เพิ่ม TEAM
                     </div>
                     <!-- <form action="" method="POST"> -->
-                    <form>
+                    <form action="/project/<%= requirementId %>/addteam" method="POST">
                         <div class="form-group">
-                            <label for="teamMemberToAdd">ทีมที่รับผิดชอบ</label>
-                            <select id="teamMemberToAdd" class="form-control">
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                            <label for="teamName">ทีมที่รับผิดชอบ</label>
+                            <select id="teamName" class="form-control" name="teamName">
+                                <template v-for="team in teams">
+                                    <option>{{team.team_name}}</option>
+                                </template>
                             </select>
                         </div>
-
                         <div class="form-group">
-                            <label for="teamMemberRole">กำหนดการ-ระยะเวลา</label>
-                            <input type="text" class="form-control" name="teamMemberRole" id="teamMemberRole">
+                            <label for="dateLine">กำหนดการ-ระยะเวลา</label>
+                            <input type="date" class="form-control" name="dateLine">
                         </div>
-                        
-
                         <div class="mt-4 text-center">
                             <button type="submit" class="btn btn-primary">เพิ่ม</button>
-                            <button type="button" class="btn btn-light">ยกเลิก</button>
+                            <a href="/project/<%= requirementId %>/detail" class="btn btn-light">ยกเลิก</a>
                         </div>
-                        
-                      </form>
+                    </form>
                 </div>
                 
             </div>
@@ -48,6 +45,7 @@
             'justify-content-center':true,
             'align-items-center':true
         },
+        teams: JSON.parse(`<%- teams %>`)
     },
     methods: {
         

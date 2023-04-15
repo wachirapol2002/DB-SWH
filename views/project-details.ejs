@@ -64,13 +64,13 @@
                                         <div class="row" style="height: 10vh;">
                                             <div class="col align-self-center">
                                                 <div>กำหนดการ</div>
-                                                <div class="bg-light text-center" style="border-radius: 10px;">-</div>
+                                                <div class="bg-light text-center" style="border-radius: 10px;">{{formatTime(project.deadline)}}</div>
                                             </div>
                                         </div>
                                         <div class="row" style="height: 10vh;">
                                             <div class="col align-self-end">
                                                 <div>ทีมที่รับผิดชอบ</div>
-                                                <div class="bg-light text-center" style="border-radius: 10px;">-</div>
+                                                <div class="bg-light text-center" style="border-radius: 10px;">{{project.team_name}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -92,67 +92,67 @@
                                         </div>
                                     </div>
                                 </div>
-                                <template v-if="permission ='admin'">
+                                <template v-if="permission == 'admin' && requirement.requirement_status == 'Not started'">
                                     <div class="row add">
                                         <div class="col text-center my-2"
                                             style="color:rgb(96, 150, 180); font-size: 1.6rem;">
-                                            <button type="button" class="btn"
-                                                style="background-color:rgb(255, 107, 0); color:rgb(255, 255, 255)">เพิ่ม
-                                                Project</button>
+                                            <a class="btn" :href="'/project/'+requirement.requirement_id+'/addteam'" style="background-color:rgb(255, 107, 0); color:rgb(255, 255, 255)">เพิ่ม Project</a>
                                         </div>
                                     </div>
                                 </template>
                                 <!-- project status -->
-                                <div class="container-fluid mt-4" style="width: 75vw; background-color : #E7E7E7;">
-                                    <div class="row">
-                                        <div class="col text-center my-2" style="font-size: 1.6rem;">
-                                           Project Status
+                                <template v-if="requirement.requirement_status != 'Not started'">
+                                    <div class="container-fluid mt-4" style="width: 75vw; background-color : #E7E7E7;">
+                                        <div class="row">
+                                            <div class="col text-center my-2" style="font-size: 1.6rem;">
+                                            Project Status
+                                            </div>
                                         </div>
+                                            <div class="row d-flex justify-content-end">
+                                                <div class="col col-8 my-2 d-flex justify-content-center" style="font-size: 1.2rem;">
+                                                    <div>รายละเอียดงาน</div>
+                                                </div>
+                                                <div class="col col-2 my-2 d-flex justify-content-center" style="font-size: 1.2rem;">
+                                                    <div>เวลา</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row Status d-flex justify-content-end">
+                                                <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
+                                                    <div class="bg-light" style="border-radius: 10px;">Lorem ipsum dolor sit amet
+                                                        consectetur adipisicing elit. Repellat soluta eos, dolor minus quaerat minima
+                                                        possimus tempore omnis similique quibusdam quo laboriosam dolorum atque aspernatur
+                                                        cumque ipsam consectetur voluptas impedit.</div>
+                                                </div>
+                                                <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
+                                                    <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
+                                                </div>
+                                            </div>
+                                            <div class="row Status d-flex justify-content-end">
+                                                <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
+                                                    <div class="bg-light" style="border-radius: 10px;">Lorem ipsum dolor sit amet
+                                                        consectetur adipisicing elit. Repellat soluta eos, dolor minus quaerat minima
+                                                        possimus tempore omnis similique quibusdam quo laboriosam dolorum atque aspernatur
+                                                        cumque ipsam consectetur voluptas impedit.</div>
+                                                </div>
+                                                <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
+                                                    <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
+                                                </div>
+                                            </div>
+                                            <div class="row Status d-flex justify-content-end">
+                                                <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
+                                                    <div class="bg-light" style="border-radius: 10px;">Lorem ipsum dolor sit amet
+                                                        consectetur adipisicing elit. Repellat soluta eos, dolor minus quaerat minima
+                                                        possimus tempore omnis similique quibusdam quo laboriosam dolorum atque aspernatur
+                                                        cumque ipsam consectetur voluptas impedit.</div>
+                                                </div>
+                                                <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
+                                                    <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
+                                                </div>
+                                            </div>
+                                        <div style="height: 1.2rem;"></div>
                                     </div>
-                                        <div class="row d-flex justify-content-end">
-                                            <div class="col col-8 my-2 d-flex justify-content-center" style="font-size: 1.2rem;">
-                                                <div>รายละเอียดงาน</div>
-                                            </div>
-                                            <div class="col col-2 my-2 d-flex justify-content-center" style="font-size: 1.2rem;">
-                                                <div>เวลา</div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row Status d-flex justify-content-end">
-                                            <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                <div class="bg-light" style="border-radius: 10px;">Lorem ipsum dolor sit amet
-                                                    consectetur adipisicing elit. Repellat soluta eos, dolor minus quaerat minima
-                                                    possimus tempore omnis similique quibusdam quo laboriosam dolorum atque aspernatur
-                                                    cumque ipsam consectetur voluptas impedit.</div>
-                                            </div>
-                                            <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
-                                            </div>
-                                        </div>
-                                        <div class="row Status d-flex justify-content-end">
-                                            <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                <div class="bg-light" style="border-radius: 10px;">Lorem ipsum dolor sit amet
-                                                    consectetur adipisicing elit. Repellat soluta eos, dolor minus quaerat minima
-                                                    possimus tempore omnis similique quibusdam quo laboriosam dolorum atque aspernatur
-                                                    cumque ipsam consectetur voluptas impedit.</div>
-                                            </div>
-                                            <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
-                                            </div>
-                                        </div>
-                                        <div class="row Status d-flex justify-content-end">
-                                            <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                <div class="bg-light" style="border-radius: 10px;">Lorem ipsum dolor sit amet
-                                                    consectetur adipisicing elit. Repellat soluta eos, dolor minus quaerat minima
-                                                    possimus tempore omnis similique quibusdam quo laboriosam dolorum atque aspernatur
-                                                    cumque ipsam consectetur voluptas impedit.</div>
-                                            </div>
-                                            <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
-                                            </div>
-                                        </div>
-                                    <div style="height: 1.2rem;"></div>
-                                </div>
+                                </template>
 
                                 <!-- Comment -->
                                 <div class="container-fluid mt-4" style="width: 75vw; background-color : #E7E7E7;">
@@ -181,7 +181,7 @@
                                             <div>เพิ่มความคิดเห็น</div>
                                         </div>
                                         <div class="col col-10 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                            <form :action="formAction(requirement.requirement_id)" method="POST">
+                                            <form :action="'/project/'+requirement.requirement_id+'/comment'" method="POST">
                                                 <div class="form-row">
                                                     <div class="col-10">
                                                         <textarea style="resize: none;" class="form-control" id="commentTextarea" name="message" rows="3"></textarea>
@@ -190,9 +190,6 @@
                                                         <button type="submit" class="btn btn-primary btn-block mb-2">Comment</button>
                                                     </div>
                                                 </div>
-
-                                                
-                                                
                                             </form>
                                         </div>
                                     </div>
@@ -220,8 +217,10 @@
                                 'justify-content-center': true,
                                 'align-items-center': true
                             },
+                            permission: `<%- permission %>`,
                             requirement: JSON.parse(`<%- requirement %>`),
-                            comments: JSON.parse(`<%- comments %>`)
+                            comments: JSON.parse(`<%- comments %>`),
+                            project: JSON.parse(`<%- project %>`),
                         },
                         methods: {
                             Zerofill(number, length) {
