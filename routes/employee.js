@@ -103,6 +103,7 @@ router.post("/add", async function (req, res, next) {
         await conn.commit();
         res.redirect('/employee');
     } catch (err) {
+        console.log(err)
         await conn.rollback();
     } finally {
         conn.release();

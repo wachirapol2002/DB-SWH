@@ -172,7 +172,19 @@ router.post('/addMember/:teamName', ifNotLoggedin, async function (req, res, nex
 })
 
 //ลบสมาชิกทีม
-router.post('/delMember/:teamName', ifNotLoggedin, async function (req, res, next) {
+router.post('/delMember/:teamName/:id', ifNotLoggedin, async function (req, res, next) {
+    try {
+        const [rows] = await pool.query(
+            "DELETE FROM team_members WHERE team_name=? AND employee_id=?",
+            [req.params.teamName, req.params.id]
+        );
+        res.redirect("/team/edit/"+req.params.teamName)
+        
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+        return next(error);
+    }
 })
 
 

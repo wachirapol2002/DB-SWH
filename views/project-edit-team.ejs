@@ -36,9 +36,9 @@
                         </div>
                         <template v-for="employee in employees">
                             <div class="row mx-auto py-2">
-                                <div class="col col-1 my-1" style="font-size: 1.2rem;">
-                                    <a href="https://google.com" class="btn btn-danger">ลบ</a>
-                                </div>
+                                <form :action="'/team/delMember/<%= teamName %>/'+employee.employee_id" class="col col-1 my-1" style="font-size: 1.2rem;" method="post">
+                                    <input type="submit" class="btn btn-danger text-white" value="ลบ">
+                                </form>
                                 <div class="col col-5 my-1 " style="font-size: 1.2rem;">
                                     {{Zerofill(employee.employee_id, 3)+" "+ employee.first_name +" "+ employee.last_name}}
                                 </div>
