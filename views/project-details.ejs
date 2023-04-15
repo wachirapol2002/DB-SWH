@@ -64,7 +64,13 @@
                                         <div class="row" style="height: 10vh;">
                                             <div class="col align-self-center">
                                                 <div>กำหนดการ</div>
-                                                <div class="bg-light text-center" style="border-radius: 10px;">{{formatTime(project.deadline)}}</div>
+                                                <template v-if="project.deadline == '-'">
+                                                    <div class="bg-light text-center p-1" style="border-radius: 10px;">-</div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="bg-light text-center" style="border-radius: 10px;">{{formatTime(project.deadline)}}</div>
+                                                </template>
+    
                                             </div>
                                         </div>
                                         <div class="row" style="height: 10vh;">
@@ -128,28 +134,30 @@
                                                     <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
                                                 </div>
                                             </div>
-                                            <div class="row Status d-flex justify-content-end">
-                                                <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                    <div class="bg-light" style="border-radius: 10px;">Lorem ipsum dolor sit amet
-                                                        consectetur adipisicing elit. Repellat soluta eos, dolor minus quaerat minima
-                                                        possimus tempore omnis similique quibusdam quo laboriosam dolorum atque aspernatur
-                                                        cumque ipsam consectetur voluptas impedit.</div>
+
+
+
+                                            <template v-if="permission == 'admin'">
+                                                <div class="row Comments">
+                                                    <div class="col col-2 my-2 d-flex flex-column text-right" style="font-size: 1.2rem;">
+                                                        <div>อัพเดทสถานะ</div>
+                                                    </div>
+                                                    <div class="col col-10 my-2 d-flex flex-column" style="font-size: 1.2rem;">
+                                                        <form :action="'/project/'+requirement.requirement_id+'/status'" method="POST">
+                                                            <div class="form-row">
+                                                                <div class="col-10">
+                                                                    <textarea style="resize: none;" class="form-control" id="commentTextarea" name="message" rows="3"></textarea>
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <button type="submit" class="btn btn-primary btn-block mb-2">Comment</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
-                                                <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                    <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
-                                                </div>
-                                            </div>
-                                            <div class="row Status d-flex justify-content-end">
-                                                <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                    <div class="bg-light" style="border-radius: 10px;">Lorem ipsum dolor sit amet
-                                                        consectetur adipisicing elit. Repellat soluta eos, dolor minus quaerat minima
-                                                        possimus tempore omnis similique quibusdam quo laboriosam dolorum atque aspernatur
-                                                        cumque ipsam consectetur voluptas impedit.</div>
-                                                </div>
-                                                <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                    <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
-                                                </div>
-                                            </div>
+                                            </template>
+
+
                                         <div style="height: 1.2rem;"></div>
                                     </div>
                                 </template>

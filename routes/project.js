@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../conDB");
+const bodyParser = require('body-parser').json();
 
 //check login
 const ifNotLoggedin = (req, res, next) => {
@@ -50,6 +51,8 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
     try {
         const [requirement] = await conn.query("SELECT * FROM requirements WHERE requirement_id = ?", [id]);
         const [comments] = await conn.query("SELECT * FROM comments WHERE requirement_id = ?", [id]);
+        const [projectId] = await pool.query("SELECT project_id FROM projects WHERE requirement_id = ?;",[id]);
+        const [status] = await conn.query("SELECT * FROM project_status WHERE project_id = ?", [projectId]);
         if(requirement[0].requirement_status != 'Not started'){
             const [project] = await conn.query("SELECT * FROM projects WHERE requirement_id = ?", [id]);
             let data = {
@@ -58,9 +61,10 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
                 login: req.session.login,
                 requirement: JSON.stringify(requirement[0]),
                 project: JSON.stringify(project[0]),
-                comments: JSON.stringify(comments)
+                comments: JSON.stringify(comments),
+                status: JSON.stringify(status)
             }
-            console.log(project)
+            console.log(data)
             await conn.commit();
             res.render('project-details', data)
         }else{
@@ -69,9 +73,10 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
                 permission: req.session.permission,
                 login: req.session.login,
                 requirement: JSON.stringify(requirement[0]),
-                project: {team_name: '-', deadline: '-'},
+                project: JSON.stringify({team_name: '-', deadline: '-'}),
                 comments: JSON.stringify(comments)
             }
+            console.log(data)
             await conn.commit();
             res.render('project-details', data)
         }
@@ -164,22 +169,36 @@ router.get("/:id/comments", async function (req, res, next) {
 });
 
 // Create new comment
-const bodyParser = require('body-parser').json();
 router.post("/:id/comment", bodyParser, async function (req, res, next) {
-    const username = 'admin';
+    const requirementId = req.params.id;
+    const username = req.session.username;
+    const message = req.body.message;
     try {
-        const [rows, fields] = await pool.query(
+        await pool.query(
             "INSERT INTO comments (requirement_id, username, message, comment_timestamp) VALUES(?, ?, ?, NOW())",
-            [req.params.id, req.session.username, req.body.message]
+            [requirementId, username, message]
         );
-        // console.log({
-        //     comment_id: rows.insertId,
-        //     requirement_id: req.params.id,
-        //     username: req.session.username,
-        //     message: req.body.message,
-        //     timestamp: Date.now(),
-        // });
-        res.redirect('/project/' + req.params.id + '/detail')
+        res.redirect('/project/' + requirementId + '/detail')
+    } catch (error) {
+        res.json(error);
+        return next(error);
+    }
+});
+
+
+// Create new status
+router.post("/:id/status", bodyParser, async function (req, res, next) {
+    const requirementId = req.params.id;
+    const updateMessage = req.body.message;
+    try {
+        const [projectId] = await pool.query(
+            "SELECT project_id FROM projects WHERE requirement_id = ?;",
+            [requirementId]
+        );
+        await pool.query("INSERT INTO project_status (project_id, status_message, status_timestamp) VALUES(?, ?, NOW());",
+            [projectId[0], updateMessage]
+        );
+        res.redirect('/project/' + requirementId + '/detail')
     } catch (error) {
         res.json(error);
         return next(error);
