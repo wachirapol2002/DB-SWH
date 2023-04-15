@@ -65,7 +65,7 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
     }
 })
 
-//หน้าเพิ่มทีม
+//หน้าเพิ่มทีมรับผิดชอบ
 router.get('/addteam', ifNotLoggedin, async function (req, res, next) {
     let data = {
         username: req.session.username,

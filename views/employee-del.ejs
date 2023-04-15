@@ -6,10 +6,10 @@
             <div class="container-fluid" :class="center" style="min-height: 80vh;">
                 <div class="container-fluid pt-2 pl-5 pr-5 pb-5 mt-5" style="width: 75vw; border-radius: 25px; background-color: #e7e7e7;">
                     <div class="col text-center my-2" style="color:rgb(96, 150, 180); font-size: 1.6rem;">
-                        Delete Employee 
+                        Delete Employee {{employee.first_name+" "+employee.last_name}}
                     </div>
-                    <!-- <form action="" method="POST"> -->
-                    <form action="" method="POST">
+                    <!-- <form action="" method="POST"> -->.
+                    <form :action="'/employee/del/'+employee.employee_id" method="POST">
                         <div class="mt-5" :class="center">
                             <button type="submit" class="btn btn-danger btn-lg mx-3">Confirm</button>
                             <button type="button" class="btn btn-light btn-lg mx-3" onclick="location.href='/employee';">Cancel</button>
