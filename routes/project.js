@@ -26,9 +26,8 @@ router.get('/', ifNotLoggedin, async function (req, res, next) {
             username: req.session.username,
             permission: req.session.permission,
             login: req.session.login,
-            requirement: JSON.stringify(rows).replace(/(\\r)*\\n/g, '<br>')
+            requirement: JSON.stringify(rows)
         }
-        console.log(JSON.stringify(rows).replace(/(\\r)*\\n/g, '<br>'))
         await conn.commit();
         res.render('project-table', data)
     } catch (err) {
@@ -62,16 +61,16 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
             const [project] = await conn.query("SELECT * FROM projects WHERE requirement_id = ?", [id]);
             const [projectId] = await pool.query("SELECT project_id FROM projects WHERE requirement_id = ?;",[id]);
             const [status] = await conn.query("SELECT * FROM project_status WHERE project_id = ?", [projectId[0].project_id]);
+            console.log(status)
             let data = {
                 username: req.session.username,
                 permission: req.session.permission,
                 login: req.session.login,
-                requirement: JSON.stringify(requirement[0]).replace(/(\\r)*\\n/g, '<br>'),
-                project: JSON.stringify(project[0]).replace(/(\\r)*\\n/g, '<br>'),
-                comments: JSON.stringify(comments).replace(/(\\r)*\\n/g, '<br>'),
-                status: JSON.stringify(status).replace(/(\\r)*\\n/g, '<br>')
+                requirement: JSON.stringify(requirement[0]),
+                project: JSON.stringify(project[0]),
+                comments: JSON.stringify(comments),
+                status: JSON.stringify(status)
             }
-            console.log(data.status)
             await conn.commit();
             res.render('project-details', data)
         }else{
@@ -80,9 +79,9 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
                 username: req.session.username,
                 permission: req.session.permission,
                 login: req.session.login,
-                requirement: JSON.stringify(requirement[0]).replace(/(\\r)*\\n/g, '<br>'),
+                requirement: JSON.stringify(requirement[0]),
                 project: JSON.stringify({team_name: '-', deadline: '-'}),
-                comments: JSON.stringify(comments).replace(/(\\r)*\\n/g, '<br>'),
+                comments: JSON.stringify(comments),
                 status: JSON.stringify({})
             }
             await conn.commit();
@@ -108,7 +107,7 @@ router.get('/:requirementId/addteam', ifNotLoggedin, async function (req, res, n
             permission: req.session.permission,
             login: req.session.login,
             requirementId: requirementId,
-            teams: JSON.stringify(rows).replace(/(\\r)*\\n/g, '<br>')
+            teams: JSON.stringify(rows)
         }
         await conn.commit();
         res.render('project-add-team', data)
