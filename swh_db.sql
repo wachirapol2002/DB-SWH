@@ -37,9 +37,6 @@ CREATE TABLE `accounts` (
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`username`, `password`, `permission`) VALUES
-('admin', 'password', 'admin');
-
 -- --------------------------------------------------------
 
 --
