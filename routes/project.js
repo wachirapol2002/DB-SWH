@@ -55,6 +55,7 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
     try {
 
         const [requirement] = await conn.query("SELECT * FROM requirements WHERE requirement_id = ?", [id]);
+        if (!requirement.length) return res.status(404).send('404 Not Found');
         const [comments] = await conn.query("SELECT * FROM comments WHERE requirement_id = ?", [id]);
         if(requirement[0].requirement_status != 'Not started'){
             const [project] = await conn.query("SELECT * FROM projects WHERE requirement_id = ?", [id]);
