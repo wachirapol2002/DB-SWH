@@ -7,15 +7,18 @@
                 <div class="row p-5"></div>
                 <div class="container-fluid pt-2 pl-5 pr-5 pb-5 mt-5" style="width: 75vw; border-radius: 25px; background-color: #e7e7e7;">
                     <div class="col text-center my-2" style="color:rgb(96, 150, 180); font-size: 1.6rem;">
-                        เพิ่มสมาชิก สำหรับทีม x
+                        เพิ่มสมาชิก สำหรับทีม <%= teamName %>
                     </div>
                     <!-- <form action="" method="POST"> -->
-                    <form>
+                        
+                    
+                    <form action="/team/addMember/<%= teamName %>" method="POST">
                         <div class="form-group">
-                            <label for="teamMemberToAdd">State</label>
-                            <select id="teamMemberToAdd" class="form-control">
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                            <label for="teamMemberToAdd">พนักงาน</label>
+                            <select id="teamMemberToAdd" name="teamMemberToAdd" class="form-control">
+                                <template v-for="employee in employees">
+                                    <option>{{Zerofill(employee.employee_id, 3)+" "+ employee.first_name +" "+ employee.last_name}}</option>
+                                </template>
                             </select>
                         </div>
 
@@ -23,11 +26,10 @@
                             <label for="teamMemberRole">บทบาท</label>
                             <input type="text" class="form-control" name="teamMemberRole" id="teamMemberRole">
                         </div>
-                        
 
                         <div class="mt-4 text-center">
                             <button type="submit" class="btn btn-primary">เพิ่ม</button>
-                            <button type="button" class="btn btn-light">ยกเลิก</button>
+                            <a href="/team/edit/<%= teamName %>" class="btn btn-light">ยกเลิก</a>
                         </div>
                         
                       </form>
@@ -48,8 +50,15 @@
             'justify-content-center':true,
             'align-items-center':true
         },
+        employees: JSON.parse(`<%- employees %>`),
+        teamName: `<%- teamName %>`
     },
     methods: {
+        Zerofill(number, length) {
+            const strNum = '' + number;
+            const pad = '0'.repeat(length);
+            return pad.substring(0, pad.length - strNum.length) + strNum;
+        },
         
     },
     computed:{
