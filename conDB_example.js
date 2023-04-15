@@ -9,7 +9,7 @@ const pool = mysql.createPool({
   database: 'swh_db',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
 });
 
 module.exports = pool;

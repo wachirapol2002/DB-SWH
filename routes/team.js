@@ -54,11 +54,13 @@ router.get('/del/:teamName', ifNotLoggedin, async function (req, res, next) {
 })
 
 //หน้าปรับแต่งทีม
-router.get('/edit', ifNotLoggedin, async function (req, res, next) {
+router.get('/edit/:teamName', ifNotLoggedin, async function (req, res, next) {
+    const team_name = req.params.teamName
     let data = {
         username: req.session.username,
         permission: req.session.permission,
-        login: req.session.login
+        login: req.session.login,
+        teamName: team_name
     }
     res.render('project-edit-team', data)
 })
