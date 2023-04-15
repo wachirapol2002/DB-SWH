@@ -17,7 +17,11 @@ router.get('/', ifNotLoggedin, async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
-        const [rows] = await conn.query("SELECT * FROM requirements WHERE username = ?", [username]);
+        if(req.session.permission == "admin"){
+            [rows] = await conn.query("SELECT * FROM requirements;");
+        }else{
+            [rows] = await conn.query("SELECT * FROM requirements WHERE username = ?;", [username]);
+        }
         let data = {
             username: req.session.username,
             permission: req.session.permission,
@@ -49,12 +53,14 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
+
         const [requirement] = await conn.query("SELECT * FROM requirements WHERE requirement_id = ?", [id]);
         const [comments] = await conn.query("SELECT * FROM comments WHERE requirement_id = ?", [id]);
-        const [projectId] = await pool.query("SELECT project_id FROM projects WHERE requirement_id = ?;",[id]);
-        const [status] = await conn.query("SELECT * FROM project_status WHERE project_id = ?", [projectId]);
         if(requirement[0].requirement_status != 'Not started'){
             const [project] = await conn.query("SELECT * FROM projects WHERE requirement_id = ?", [id]);
+            const [projectId] = await pool.query("SELECT project_id FROM projects WHERE requirement_id = ?;",[id]);
+            const [status] = await conn.query("SELECT * FROM project_status WHERE project_id = ?", [projectId[0].project_id]);
+            console.log(status)
             let data = {
                 username: req.session.username,
                 permission: req.session.permission,
@@ -64,19 +70,19 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
                 comments: JSON.stringify(comments),
                 status: JSON.stringify(status)
             }
-            console.log(data)
             await conn.commit();
             res.render('project-details', data)
         }else{
+            console.log('Not started')
             let data = {
                 username: req.session.username,
                 permission: req.session.permission,
                 login: req.session.login,
                 requirement: JSON.stringify(requirement[0]),
                 project: JSON.stringify({team_name: '-', deadline: '-'}),
-                comments: JSON.stringify(comments)
+                comments: JSON.stringify(comments),
+                status: JSON.stringify({})
             }
-            console.log(data)
             await conn.commit();
             res.render('project-details', data)
         }
@@ -102,8 +108,6 @@ router.get('/:requirementId/addteam', ifNotLoggedin, async function (req, res, n
             requirementId: requirementId,
             teams: JSON.stringify(rows)
         }
-        console.log(data)
-        console.log(requirementId)
         await conn.commit();
         res.render('project-add-team', data)
     } catch (err) {
@@ -196,7 +200,7 @@ router.post("/:id/status", bodyParser, async function (req, res, next) {
             [requirementId]
         );
         await pool.query("INSERT INTO project_status (project_id, status_message, status_timestamp) VALUES(?, ?, NOW());",
-            [projectId[0], updateMessage]
+            [projectId[0].project_id, updateMessage]
         );
         res.redirect('/project/' + requirementId + '/detail')
     } catch (error) {

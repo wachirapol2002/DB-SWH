@@ -123,15 +123,14 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="row Status d-flex justify-content-end">
+                                            <div class="row Status d-flex justify-content-end" v-for="status in allStatus">
                                                 <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                    <div class="bg-light" style="border-radius: 10px;">Lorem ipsum dolor sit amet
-                                                        consectetur adipisicing elit. Repellat soluta eos, dolor minus quaerat minima
-                                                        possimus tempore omnis similique quibusdam quo laboriosam dolorum atque aspernatur
-                                                        cumque ipsam consectetur voluptas impedit.</div>
+                                                    <div class="bg-light" style="border-radius: 10px;">
+                                                        {{ status.status_message}}
+                                                    </div>
                                                 </div>
                                                 <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                    <div class="bg-light text-center" style="border-radius: 10px;">00:00</div>
+                                                    <div class="bg-light text-center" style="border-radius: 10px;">{{ formatTime(status.status_timestamp)}}</div>
                                                 </div>
                                             </div>
 
@@ -229,15 +228,13 @@
                             requirement: JSON.parse(`<%- requirement %>`),
                             comments: JSON.parse(`<%- comments %>`),
                             project: JSON.parse(`<%- project %>`),
+                            allStatus: JSON.parse(`<%- status %>`),
                         },
                         methods: {
                             Zerofill(number, length) {
                                 const strNum = '' + number;
                                 const pad = '0'.repeat(length);
                                 return pad.substring(0, pad.length - strNum.length) + strNum;
-                            },
-                            formAction(id) {
-                                return `http://localhost:3000/project/${id}/comment`
                             },
                             formatTime(str) {
                                 return moment(str).format('lll')
