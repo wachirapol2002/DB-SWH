@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../conDB");
-const { redirect } = require("express/lib/response");
 
 //check login
 const ifNotLoggedin = (req, res, next) => {
@@ -62,9 +61,10 @@ router.get('/edit/:teamName', ifNotLoggedin, async function (req, res, next) {
     try {
         const [rows] = await conn.query("SELECT * FROM employees JOIN team_members USING (employee_id) WHERE team_name = ?;",
         [team_name]);
+        await conn.query("UPDATE teams SET total_members = (SELECT count(employee_id) FROM team_members WHERE team_name = ?) WHERE team_name = ?;", 
+        [team_name, team_name]);
         const [memberCount] = await conn.query("SELECT total_members FROM teams WHERE team_name = ?;",
         [team_name]);
-        console.log(memberCount)
         let data = {
             username: req.session.username,
             permission: req.session.permission,

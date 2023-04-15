@@ -63,14 +63,28 @@ router.get('/del/:employeeId', ifNotLoggedin, async function (req, res, next) {
     }
 })
 
-//หน้าปรับปรุง พนักงาน
-router.get('/edit', ifNotLoggedin,async function (req, res, next) {
-    let data = {
-        username: req.session.username,
-        permission: req.session.permission,
-        login: req.session.login
+//หน้าแก้ไขข้อมูล พนักงาน
+router.get('/edit/:employeeId', ifNotLoggedin,async function (req, res, next) {
+    const employeeId = req.params.employeeId
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        const [rows] = await conn.query("SELECT * FROM employees WHERE employee_id = ?;",
+        [employeeId]);
+        let data = {
+            username: req.session.username,
+            permission: req.session.permission,
+            login: req.session.login,
+            employee: JSON.stringify(rows[0])
+        }
+        console.log(rows[0])
+        await conn.commit();  
+        res.render('project-edit-employee', data)
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
     }
-    res.render('project-edit-employee', data)
 })
 
 //เพิ่ม พนักงาน
@@ -79,13 +93,13 @@ router.post("/add", async function (req, res, next) {
     const Lastname = req.body.empLastname;
     const Email = req.body.empEmail;
     const Phone = req.body.empPhone;
-    const Role = req.body.empRole;
+    const Job = req.body.empJob;
     const Salary = req.body.empSalary;
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
         await conn.query("INSERT INTO employees(employee_id, first_name, last_name, email, phone_number, job, salary) VALUES(NULL, ?, ?, ?, ?, ?, ?);", 
-        [Firstname, Lastname, Email, Phone, Role, Salary]);
+        [Firstname, Lastname, Email, Phone, Job, Salary]);
         await conn.commit();
         res.redirect('/employee');
     } catch (err) {
@@ -97,7 +111,7 @@ router.post("/add", async function (req, res, next) {
 
 //ลบ พนักงาน
 router.post("/del/:employeeId", async function (req, res, next) {
-    console.log(req.params.employeeId)
+    res.redirect('/employee');
     const employeeId = req.params.employeeId;
     const conn = await pool.getConnection()
     await conn.beginTransaction();
@@ -112,5 +126,28 @@ router.post("/del/:employeeId", async function (req, res, next) {
         conn.release();
     }
 });
+
+//บันทึกการแก้ไข พนักงาน
+router.post('/edit/:employeeId', ifNotLoggedin,async function (req, res, next) {
+    const employeeId = req.params.employeeId
+    const Firstname = req.body.empFirstname;
+    const Lastname = req.body.empLastname;
+    const Email = req.body.empEmail;
+    const Phone = req.body.empPhone;
+    const Job = req.body.empJob;
+    const Salary = req.body.empSalary;
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        await conn.query("UPDATE employees SET first_name = ?, last_name = ?, email = ?, phone_number = ?, job = ?, salary = ? WHERE employee_id = ?;", 
+        [Firstname, Lastname, Email, Phone, Job, Salary, employeeId]);
+        await conn.commit();  
+        res.redirect('/employee');
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
+    }
+})
 
 module.exports = router

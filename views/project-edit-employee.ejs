@@ -7,43 +7,47 @@
                 <div class="row p-4"></div>
                 <div class="container-fluid pt-2 pl-5 pr-5 pb-5 mt-5" style="width: 75vw; border-radius: 25px; background-color: #e7e7e7;">
                     <div class="col text-center my-2" style="color:rgb(96, 150, 180); font-size: 1.6rem;">
-                        แก้ไขพนักงาน
+                        แก้ไขข้อมูลพนักงาน
                     </div>
                     <!-- <form action="" method="POST"> -->
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-6 pr-4">
-                                <label for="empFirstname">ชื่อ</label>
-                                <input type="text" class="form-control" id="empFirstname" name="empFirstname">
+                        <form :action="'/employee/edit/'+employee.employee_id" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col-md-6 pr-4">
+                                    <label for="empFirstname">ชื่อ</label>
+                                    <input type="text" class="form-control" id="empFirstname" name="empFirstname" :value="employee.first_name" placeholder="ชื่อ">
+                                </div>
+                                <div class="form-group col-md-6 pl-4">
+                                    <label for="empLastname">นามสกุล</label>
+                                    <input type="text" class="form-control" id="empLastname" name="empLastname" :value="employee.last_name" placeholder="นามสกุล">
+                                </div>
                             </div>
-                            <div class="form-group col-md-6 pl-4">
-                                <label for="empLastname">นามสกุล</label>
-                                <input type="text" class="form-control" id="empLastname" name="empLastname">
+                            <div class="form-row">
+                                <div class="form-group col-md-6 pr-4">
+                                    <label for="empEmail">E-mail</label>
+                                    <input type="email" class="form-control" id="empEmail" name="empEmail" :value="employee.email" placeholder="อีเมล">
+                                </div>
+                                <div class="form-group col-md-6 pl-4">
+                                    <label for="empPhone">หมายเลขโทรศัพท์</label>
+                                    <input type="tel" class="form-control" id="empPhone" name="empPhone" :value="employee.phone_number" placeholder="หมายเลขโทรศัพท์">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6 pr-4">
-                                <label for="empEmail">E-mail</label>
-                                <input type="email" class="form-control" id="empEmail" name="empEmail">
+                            <div class="form-row">
+                                <div class="form-group col-md-6 pr-4">
+                                    <label for="empJob">ตำแหน่ง</label>
+                                    <input type="text" class="form-control" id="empJob" name="empJob" :value="employee.job" placeholder="ตำแหน่งงาน">
+                                </div>
+                                <div class="form-group col-md-6 pl-4">
+                                    <label for="empSalary">เงินเดือน</label>
+                                    <input type="number" min="12000" class="form-control" id="empSalary" name="empSalary" :value="employee.salary" placeholder="เงินเดือน">
+                                </div>
                             </div>
-                            <div class="form-group col-md-6 pl-4">
-                                <label for="empPhone">เบอร์โทร</label>
-                                <input type="tel" class="form-control" id="empPhone" name="empPhone">
+                            
+                            <div class="mt-4 text-center">
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                <a href="/employee" class="btn btn-light">ยกเลิก</a>
                             </div>
-                        </div>
-                        <div class="form-group mb-5">
-                          <label for="empRole">ตำแหน่ง</label>
-                          <input type="text" class="form-control" name="empRole" id="empRole">
-                        </div>
-                        
-
-                        <div class="mt-4 text-center">
-                            <button type="submit" class="btn btn-primary">เพิ่ม</button>
-                            <button type="button" class="btn btn-danger">ลบ</button>
-                            <button type="button" class="btn btn-light">ยกเลิก</button>
-                        </div>
-                        
-                      </form>
+                            
+                        </form>
                 </div>
                 
             </div>
@@ -61,6 +65,7 @@
             'justify-content-center':true,
             'align-items-center':true
         },
+        employee: JSON.parse(`<%- employee %>`)
     },
     methods: {
         

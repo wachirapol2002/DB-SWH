@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #60b4a8; height: 10vh;">
     <div class="container-fluid">
-        <div class="d-flex">
-            <a class="navbar-brand text-light" href="#">
-                <img src="#" style="max-height:7.5vh; width: auto; border-radius: 50%;">
-                Company
-            </a>
+        <div class="d-flex align-items-center h3">
+            <img src="/image/icon.png" style="max-height:7.5vh; width: auto;">
+
             <a class="nav-link text-light" href="/project">Project</a>
+            <% if (typeof login !== 'undefined' && login && permission == 'admin') { %>
             <a class="nav-link text-light" href="/team">Team</a>
             <a class="nav-link text-light" href="/employee">Employee</a>
+            <% }%>
         </div>
         <div class="d-flex justify-content-end align-items-center">
             <% if (typeof login !== 'undefined' && login) { %>
