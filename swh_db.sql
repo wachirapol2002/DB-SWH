@@ -1,15 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2023 at 11:30 PM
--- Server version: 8.0.32
--- PHP Version: 8.2.0
+-- Generation Time: Apr 15, 2023 at 08:19 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+07:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -28,10 +28,10 @@ SET time_zone = "+07:00";
 --
 
 CREATE TABLE `accounts` (
-  `username` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
-  `password` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'รหัสผ่าน',
-  `permission` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'ระดับสิทธิ์'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางเก็บ Account';
+  `username` varchar(30) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
+  `password` varchar(30) NOT NULL COMMENT 'รหัสผ่าน',
+  `permission` varchar(10) NOT NULL COMMENT 'ระดับสิทธิ์'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ตารางเก็บ Account';
 
 --
 -- Dumping data for table `accounts`
@@ -51,8 +51,8 @@ CREATE TABLE `comments` (
   `requirement_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสความต้องการ',
   `username` varchar(30) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
   `message` varchar(300) NOT NULL COMMENT 'ข้อความ',
-  `comment_timestamp` timestamp NOT NULL COMMENT 'บันทึกเวลา'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางความคิดเห็น';
+  `comment_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'บันทึกเวลา'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ตารางความคิดเห็น';
 
 -- --------------------------------------------------------
 
@@ -66,8 +66,9 @@ CREATE TABLE `employees` (
   `last_name` varchar(30) NOT NULL COMMENT 'นามสกุล',
   `email` varchar(50) NOT NULL COMMENT 'อีเมล',
   `phone_number` varchar(10) NOT NULL COMMENT 'หมายเลขโทรศัพท์',
-  `job` varchar(30) NOT NULL COMMENT 'ตำแหน่งงาน'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางพนักงาน';
+  `job` varchar(30) NOT NULL COMMENT 'ตำแหน่งงาน',
+  `salary` int(11) NOT NULL DEFAULT 12000 COMMENT 'เงินเดือน'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ตารางพนักงาน';
 
 -- --------------------------------------------------------
 
@@ -80,7 +81,7 @@ CREATE TABLE `projects` (
   `requirement_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสความต้องการ',
   `team_name` varchar(30) NOT NULL COMMENT 'ชื่อทีมที่รับผิดชอบ',
   `deadline` date NOT NULL COMMENT 'กำหนดการ'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางโครงการ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ตารางโครงการ';
 
 -- --------------------------------------------------------
 
@@ -92,8 +93,8 @@ CREATE TABLE `project_status` (
   `project_status_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสสถานะโครงการ',
   `project_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสโครงการ',
   `status_message` varchar(30) NOT NULL COMMENT 'ข้อความสถานะ',
-  `status_timestamp` timestamp NOT NULL COMMENT 'บันทึกเวลา'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางเก็บสถานะโครงการ';
+  `status_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'บันทึกเวลา'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ตารางเก็บสถานะโครงการ';
 
 -- --------------------------------------------------------
 
@@ -108,9 +109,9 @@ CREATE TABLE `requirements` (
   `detail` varchar(5000) NOT NULL COMMENT 'รายละเอียดโครงการ',
   `budget` varchar(30) NOT NULL COMMENT 'งบประมาณ',
   `contact` varchar(30) NOT NULL COMMENT 'ช่องทางติดต่อ',
-  `require_timestamp` timestamp NOT NULL COMMENT 'บันทึกเวลา',
+  `require_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'บันทึกเวลา',
   `requirement_status` varchar(30) NOT NULL COMMENT 'สถานะ'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางความต้องการ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ตารางความต้องการ';
 
 -- --------------------------------------------------------
 
@@ -120,9 +121,9 @@ CREATE TABLE `requirements` (
 
 CREATE TABLE `teams` (
   `team_name` varchar(30) NOT NULL COMMENT 'ชื่อทีม',
-  `total_members` int NOT NULL COMMENT 'จำนวนสมาชิก',
-  `total_projects` int NOT NULL COMMENT 'จำนวนโครงการที่รับผิดชอบ'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางทีม';
+  `total_members` int(11) NOT NULL COMMENT 'จำนวนสมาชิก',
+  `total_projects` int(11) NOT NULL COMMENT 'จำนวนโครงการที่รับผิดชอบ'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ตารางทีม';
 
 -- --------------------------------------------------------
 
@@ -135,7 +136,7 @@ CREATE TABLE `team_members` (
   `team_name` varchar(30) NOT NULL COMMENT 'ชื่อทีม',
   `employee_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสพนักงาน',
   `role` varchar(30) NOT NULL COMMENT 'บทบาทในทีม'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='ตารางสมาชิกทีม';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ตารางสมาชิกทีม';
 
 --
 -- Indexes for dumped tables
@@ -271,7 +272,7 @@ ALTER TABLE `requirements`
 -- Constraints for table `team_members`
 --
 ALTER TABLE `team_members`
-  ADD CONSTRAINT `team_members_employees` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `team_members_employees` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `team_members_teams` FOREIGN KEY (`team_name`) REFERENCES `teams` (`team_name`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
