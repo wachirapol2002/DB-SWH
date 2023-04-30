@@ -19,8 +19,8 @@
                             
                         </div>
                         <div class="row mx-auto h3">
-                            <div class="col-5 h4">
-                                สมาชิก <%=memberCount%>
+                            <div class="col-2 h4">
+                                สมาชิก: <%=memberCount%>
                             </div>
                         </div>
                         <div class="row mx-auto">
@@ -36,7 +36,7 @@
                         </div>
                         <template v-for="employee in employees">
                             <div class="row mx-auto py-2">
-                                <form :action="'/team/delMember/<%= teamName %>/'+employee.employee_id" class="col col-1 my-1" style="font-size: 1.2rem;" method="post">
+                                <form :action='"/team/delMember/<%= teamName %>/"+employee.employee_id' class="col col-1 my-1" style="font-size: 1.2rem;" method="post">
                                     <input type="submit" class="btn btn-danger text-white" value="ลบ">
                                 </form>
                                 <div class="col col-5 my-1 " style="font-size: 1.2rem;">
@@ -47,6 +47,26 @@
                                 </div>
                             </div>
                         </template>
+                        <div class="row m-3 h4">
+                            <div>Project: <%=projectCount%></div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">ProjectID</th>
+                                <th scope="col">ProjectName</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <template v-for="project in projects">
+                                    <tr>
+                                        <td>{{project.requirement_id}}</td>
+                                        <td>{{project.projectname}}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+
+                          </table>
                         <div class="mt-4 text-center">
                             <a href="/team/addMember/<%= teamName %>" class="btn btn-info">เพิ่มสมาชิก</a>
                             <a href="/team" class="btn btn-light">ยกเลิก</a>
@@ -71,6 +91,7 @@
             'align-items-center':true
         },
         employees: JSON.parse(`<%-employees%>`),
+        projects: JSON.parse(`<%-projects%>`),
     },
     methods: {
         Zerofill(number, length) {

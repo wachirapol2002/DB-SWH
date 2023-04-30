@@ -18,9 +18,9 @@ router.get('/', ifNotLoggedin, async function (req, res, next) {
     await conn.beginTransaction();
     try {
         if(req.session.permission == "admin"){
-            [rows] = await conn.query("SELECT * FROM requirements;");
+            [rows] = await conn.query("SELECT * FROM requirements ORDER BY requirement_status DESC;");
         }else{
-            [rows] = await conn.query("SELECT * FROM requirements WHERE username = ?;", [username]);
+            [rows] = await conn.query("SELECT * FROM requirements WHERE username = ? ORDER BY requirement_status ASC;", [username]);
         }
         let data = {
             username: req.session.username,
@@ -61,7 +61,6 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
             const [project] = await conn.query("SELECT * FROM projects WHERE requirement_id = ?", [id]);
             const [projectId] = await pool.query("SELECT project_id FROM projects WHERE requirement_id = ?;",[id]);
             const [status] = await conn.query("SELECT * FROM project_status WHERE project_id = ?", [projectId[0].project_id]);
-            console.log(status)
             let data = {
                 username: req.session.username,
                 permission: req.session.permission,
@@ -74,7 +73,6 @@ router.get('/:id/detail', ifNotLoggedin, async function(req, res, next) {
             await conn.commit();
             res.render('project-details', data)
         }else{
-            console.log('Not started')
             let data = {
                 username: req.session.username,
                 permission: req.session.permission,
@@ -128,8 +126,12 @@ router.post('/:requirementId/addteam', ifNotLoggedin, async function (req, res, 
     try {
         await conn.query("INSERT INTO projects (project_id, requirement_id, team_name, deadline) VALUES (NULL, ?, ?, ?);",
         [requirementId, teamName, dateLine]);
-        await conn.query("UPDATE requirements SET requirement_status = 'In progress' WHERE requirement_id = ?;", 
+        await conn.query("UPDATE requirements SET requirement_status = 'In progress' WHERE requirement_id = ?;",
         [requirementId]);
+        const [count] = await conn.query("SELECT count(*) 'count'  FROM projects JOIN requirements USING (requirement_id)"+
+        "WHERE team_name = ? AND requirement_status = 'In progress';", [teamName]);
+        await conn.query("UPDATE teams SET total_projects = ? WHERE team_name = ?;",
+        [count[0].count, teamName]);
         await conn.commit();
         res.redirect('/project/'+requirementId+'/detail')
     } catch (err) {
@@ -209,5 +211,53 @@ router.post("/:id/status", bodyParser, async function (req, res, next) {
         return next(error);
     }
 });
+
+//เสร็จสิ้น Project
+router.post('/:requirementId/Finish', ifNotLoggedin, async function (req, res, next) {
+    const requirementId = req.params.requirementId
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        await conn.query("UPDATE requirements SET requirement_status = 'Finish' WHERE requirement_id = ?;", 
+        [requirementId]);
+        const [teamName] = await conn.query("SELECT team_name FROM requirements JOIN projects USING (requirement_id) WHERE requirement_id = ?;",
+        [requirementId]);
+        const [count] = await conn.query("SELECT count(*) 'count'  FROM projects JOIN requirements USING (requirement_id)"+
+        "WHERE team_name = ? AND requirement_status = 'In progress';", [teamName[0].team_name]);
+        await conn.query("UPDATE teams SET total_projects = ? WHERE team_name = ?;",
+        [count[0].count, teamName[0].team_name]);
+        await conn.commit();
+        res.redirect('/project/'+requirementId+'/detail')
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
+    }
+})
+
+//แก้ Project หลังจากเสร็จ
+router.post('/:requirementId/Improvement', ifNotLoggedin, async function (req, res, next) {
+    const requirementId = req.params.requirementId
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        await conn.query("UPDATE requirements SET requirement_status = 'In progress' WHERE requirement_id = ?;", 
+        [requirementId]);
+        const [teamName] = await conn.query("SELECT team_name FROM requirements JOIN projects USING (requirement_id) WHERE requirement_id = ?;",
+        [requirementId]);
+        const [count] = await conn.query("SELECT count(*) 'count'  FROM projects JOIN requirements USING (requirement_id)"+
+        "WHERE team_name = ? AND requirement_status = 'In progress';", [teamName[0].team_name]);
+        await conn.query("UPDATE teams SET total_projects = ? WHERE team_name = ?;",
+        [count[0].count, teamName[0].team_name]);
+        await conn.commit();
+        res.redirect('/project/'+requirementId+'/detail')
+    } catch (err) {
+        await conn.rollback();
+    } finally {
+        conn.release();
+    }
+})
+
+
 
 module.exports = router

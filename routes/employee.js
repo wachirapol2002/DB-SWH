@@ -77,7 +77,6 @@ router.get('/edit/:employeeId', ifNotLoggedin,async function (req, res, next) {
             login: req.session.login,
             employee: JSON.stringify(rows[0])
         }
-        console.log(rows[0])
         await conn.commit();  
         res.render('project-edit-employee', data)
     } catch (err) {

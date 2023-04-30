@@ -42,11 +42,14 @@
                 </div>
 
                 <div class="row mx-auto py-4" :class="'row-table-head'">
-                    <div class="col-8"  :class="'row-1col'">
+                    <div class="col-6"  :class="'row-1col'">
                         Team Name
                     </div>
                     <div class="col-2"  :class="'row-1col'">
                         Member
+                    </div>
+                    <div class="col-2"  :class="'row-1col'">
+                        Project
                     </div>
                     <div class="col-2"  :class="'row-1col'">
                     </div>
@@ -54,11 +57,14 @@
 
                 <template v-for="team in teams">
                     <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                            <div class="col-8" :class="'row-1col'">
+                            <div class="col-6" :class="'row-1col'">
                                 {{team.team_name}}
                             </div>
                             <div class="col-2" :class="'row-1col'">
                                 Member : {{team.total_members}}
+                            </div>
+                            <div class="col-2" :class="'row-1col'">
+                                Project : {{team.total_projects}}
                             </div>
                             <div class="col-2" :class="'row-2col'">
                                 <a class="bi bi-gear-fill mx-4" :class="'icon'" :href="'/team/edit/'+team.team_name" style="font-size: 2rem;"></a>
@@ -66,57 +72,6 @@
                             </div>
                     </div>
                 </template>
-                <!-- <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-10" :class="'row-1col'">
-                        Akasuki Team
-                    </div>
-                    <div class="col-2" :class="'row-2col'">
-                        <a class="bi bi-gear-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
-                        <a class="bi bi-trash3-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
-                    </div>
-                </div>
-                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-10" :class="'row-1col'">
-                        Grapes Juice
-                    </div>
-                    <div class="col-2" :class="'row-2col'">
-                        <a class="bi bi-gear-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
-                        <a class="bi bi-trash3-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
-                    </div>
-                </div>
-                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-10" :class="'row-1col'">
-                        いっぱいいっぱいありがとう
-                    </div>
-                    <div class="col-2" :class="'row-2col'">
-                        <a class="bi bi-gear-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
-                        <a class="bi bi-trash3-fill mx-4" :class="'icon'" href="#" style="font-size: 2rem;"></a>
-                    </div>
-                </div>
-                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-10" :class="'row-1col'">
-
-                    </div>
-                    <div class="col-2" :class="'row-2col'">
-
-                    </div>
-                </div>
-                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-10" :class="'row-1col'">
-
-                    </div>
-                    <div class="col-2" :class="'row-2col'">
-
-                    </div>
-                </div>
-                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-10" :class="'row-1col'">
-
-                    </div>
-                    <div class="col-2" :class="'row-2col'">
-
-                    </div>
-                </div> -->
             </div>
         </main>
         <%- include('footer') %>

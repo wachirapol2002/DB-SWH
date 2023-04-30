@@ -15,6 +15,18 @@ router.get('/', ifNotLoggedin, async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
+        const [rowCheack] = await conn.query("SELECT * FROM teams");
+        for (const row of rowCheack) {
+            const [count] = await conn.query(
+              "SELECT count(*) 'count'  FROM projects JOIN requirements USING (requirement_id)"+
+              "WHERE team_name = ? AND requirement_status = 'In progress';",
+              [row.team_name]
+            );
+            await conn.query(
+              "UPDATE teams SET total_projects = ? WHERE team_name = ?;",
+              [count[0].count, row.team_name]
+            );
+          }
         const [rows] = await conn.query("SELECT * FROM teams");
         let data = {
             username: req.session.username,
@@ -53,7 +65,7 @@ router.get('/del/:teamName', ifNotLoggedin, async function (req, res, next) {
     res.render('team-del', data)
 })
 
-//หน้าปรับแต่งทีม
+//หน้ารายละเอียดทีม
 router.get('/edit/:teamName', ifNotLoggedin, async function (req, res, next) {
     const team_name = req.params.teamName
     const conn = await pool.getConnection()
@@ -63,14 +75,19 @@ router.get('/edit/:teamName', ifNotLoggedin, async function (req, res, next) {
         [team_name]);
         await conn.query("UPDATE teams SET total_members = (SELECT count(employee_id) FROM team_members WHERE team_name = ?) WHERE team_name = ?;", 
         [team_name, team_name]);
-        const [memberCount] = await conn.query("SELECT total_members FROM teams WHERE team_name = ?;",
+        const [team] = await conn.query("SELECT * FROM teams WHERE team_name = ?;",
         [team_name]);
+        const [projects] = await conn.query("SELECT requirement_id, projectname FROM projects JOIN requirements USING (requirement_id)"+
+        "WHERE team_name = ? AND requirement_status = 'In progress';", [team_name]);
+        console.log(projects)
         let data = {
             username: req.session.username,
             permission: req.session.permission,
             login: req.session.login,
             teamName: team_name,
-            memberCount: memberCount[0].total_members,
+            projects: JSON.stringify(projects),
+            projectCount: team[0].total_projects,
+            memberCount: team[0].total_members,
             employees: JSON.stringify(rows),
         }
         await conn.commit();
@@ -106,15 +123,6 @@ router.get('/addMember/:teamName', ifNotLoggedin, async function (req, res, next
     }
 })
 
-//หน้ารายละเอียดทีม
-router.get('/detail', ifNotLoggedin, async function (req, res, next) {
-    let data = {
-        username: req.session.username,
-        permission: req.session.permission,
-        login: req.session.login
-    }
-    res.render('team-details-table', data)
-})
 
 //สร้าง team
 router.post("/create", async function (req, res, next) {

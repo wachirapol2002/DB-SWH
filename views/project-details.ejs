@@ -2,7 +2,7 @@
     <%- include('header') %>
         <style>
             .status-fin {
-                background: #6CD396;
+                background: #28a745;
                 border-radius: 30px;
                 color: white;
                 text-align: center;
@@ -10,15 +10,15 @@
             }
 
             .status-inpro {
-                background: #84DCE1;
+                background: #ffc107;
                 border-radius: 30px;
-                color: white;
+                color: black;
                 text-align: center;
 
             }
 
             .status-notsta {
-                background: #FF8383;
+                background: #dc3545;
                 border-radius: 30px;
                 color: white;
                 text-align: center;
@@ -62,7 +62,7 @@
                                             </div>
                                         </div>
                                         <div class="row" style="height: 10vh;">
-                                            <div class="col align-self-center">
+                                            <div class="col align-self-center" style="font-size: 1rem;">
                                                 <div>กำหนดการ</div>
                                                 <template v-if="project.deadline == '-'">
                                                     <div class="bg-light text-center p-1" style="border-radius: 10px;">-</div>
@@ -87,16 +87,34 @@
                                             {{requirement.detail}}
                                         </div>
                                     </div>
-                                    <div class="col col-2 my-2 d-flex flex-column align-self-start"
-                                        style="font-size: 1.2rem;" style="height: 30vh;">
-                                        <div>สถานะ</div>
-                                        <div class="text-center" style="border-radius: 10px;" :class="{
-                                        'status-notsta': requirement.requirement_status === 'Not started',
-                                        'status-inpro': requirement.requirement_status === 'In progress',
-                                        'status-fin': requirement.requirement_status === 'Finish'}">
-                                            {{requirement.requirement_status}}
+                                    <div class="col col-2 my-2 d-flex flex-column align-self-start" style="font-size: 1.2rem;" style="height: 30vh;">
+                                        <div class="row" style="height: 20vh;">
+                                            <div class="col align-self-start">
+                                                <div>สถานะ</div>
+                                                <div class="text-center" style="border-radius: 10px;" :class="{
+                                                'status-notsta': requirement.requirement_status === 'Not started',
+                                                'status-inpro': requirement.requirement_status === 'In progress',
+                                                'status-fin': requirement.requirement_status === 'Finish'}">
+                                                    {{requirement.requirement_status}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="height: 10vh;">
+                                            <div class="col align-self-end">
+                                                <template v-if="permission == 'admin' && requirement.requirement_status == 'In progress'">
+                                                    <form :action="'/project/'+requirement.requirement_id+'/Finish'" method="POST">
+                                                        <button type="submit" class="btn btn-danger btn-block mb-2">เสร็จสิ้น</button>
+                                                    </form>
+                                                </template>
+                                                <template v-else-if="permission == 'admin' && requirement.requirement_status == 'Finish'">
+                                                    <form :action="'/project/'+requirement.requirement_id+'/Improvement'" method="POST">
+                                                        <button type="submit" class="btn btn-primary btn-block mb-2">ปรับปรุง</button>
+                                                    </form>
+                                                </template>
+                                            </div>
                                         </div>
                                     </div>
+                                        
                                 </div>
                                 <template v-if="permission == 'admin' && requirement.requirement_status == 'Not started'">
                                     <div class="row add">
@@ -106,59 +124,74 @@
                                         </div>
                                     </div>
                                 </template>
+
                                 <!-- project status -->
                                 <template v-if="requirement.requirement_status != 'Not started'">
-                                    <div class="container-fluid mt-4" style="width: 75vw; background-color : #E7E7E7;">
+                                    <div class="container-fluid mt-4 bg-light" style="width: 75vw; border-style: solid; border-width: 1px;">
                                         <div class="row">
                                             <div class="col text-center my-2" style="font-size: 1.6rem;">
                                             Project Status
                                             </div>
                                         </div>
-                                            <div class="row d-flex justify-content-end">
-                                                <div class="col col-8 my-2 d-flex justify-content-center" style="font-size: 1.2rem;">
-                                                    <div>รายละเอียดงาน</div>
-                                                </div>
-                                                <div class="col col-2 my-2 d-flex justify-content-center" style="font-size: 1.2rem;">
-                                                    <div>เวลา</div>
+                                        <div class="row d-flex justify-content-end">
+                                            <div class="col col-8 my-2 d-flex justify-content-center" style="font-size: 1.2rem;">
+                                                <div>รายละเอียดงาน</div>
+                                            </div>
+                                            <div class="col col-2 my-2 d-flex justify-content-center" style="font-size: 1.2rem;">
+                                                <div>เวลา</div>
+                                            </div>
+                                        </div>
+                                        <div class="row Status d-flex " v-for="status in allStatus">
+                                            <div class="col col-2 my-2 d-flex justify-content-end" style="font-size: 1rem;">
+                                               <div>●</div>
+                                            </div>
+                                            <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
+                                                <div class="px-4" style="border-radius: 10px; overflow-wrap: break-word; background-color : #E7E7E7;">
+                                                    {{ status.status_message}}
                                                 </div>
                                             </div>
-                                            
-                                            <div class="row Status d-flex justify-content-end" v-for="status in allStatus">
-                                                <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                    <div class="bg-light" style="border-radius: 10px;">
-                                                        {{ status.status_message}}
+                                            <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1rem;">
+                                                <div class="text-center" style="border-radius: 10px; background-color : #E7E7E7;">{{ formatTime(status.status_timestamp)}}</div>
+                                            </div>
+                                        </div>
+
+                                        <template v-if="permission == 'admin' && requirement.requirement_status == 'In progress'">
+                                            <form :action="'/project/'+requirement.requirement_id+'/status'" method="POST">
+                                                <div class="row">
+                                                    <div class="col text-center my-2" style="font-size: 1.2rem;">
+                                                        อัพเดทสถานะ
                                                     </div>
                                                 </div>
-                                                <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                    <div class="bg-light text-center" style="border-radius: 10px;">{{ formatTime(status.status_timestamp)}}</div>
+                                            <div class="row Update">
+                                                <div class="col col-2 my-2 d-flex flex-column text-right" style="font-size: 1.2rem;">
+                                                </div>
+                                                <div class="col col-10 my-2 d-flex flex-column" style="font-size: 1.2rem;">
+                                                    <div class="form-row">
+                                                        <div class="col-10">
+                                                            <textarea style="resize: none;" class="form-control" id="commentTextarea" name="message" rows="3"></textarea>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-
-
-
-                                            <template v-if="permission == 'admin'">
-                                                <div class="row Comments">
-                                                    <div class="col col-2 my-2 d-flex flex-column text-right" style="font-size: 1.2rem;">
-                                                        <div>อัพเดทสถานะ</div>
-                                                    </div>
-                                                    <div class="col col-10 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                                        <form :action="'/project/'+requirement.requirement_id+'/status'" method="POST">
-                                                            <div class="form-row">
-                                                                <div class="col-10">
-                                                                    <textarea style="resize: none;" class="form-control" id="commentTextarea" name="message" rows="3"></textarea>
-                                                                </div>
-                                                                <div class="col-2">
-                                                                    <button type="submit" class="btn btn-primary btn-block mb-2">Comment</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col text-center my-2" style="font-size: 1.2rem;">
+                                                    <button type="submit" class="btn btn-success  mb-2">Update</button>
                                                 </div>
-                                            </template>
+                                            </div>
+                                            </form>
+                                        </template>
 
 
                                         <div style="height: 1.2rem;"></div>
                                     </div>
+                                </template>
+                                
+                                <template v-if="permission != 'admin' && requirement.requirement_status == 'Finish'">
+                                    <form :action="'/project/'+requirement.requirement_id+'/Improvement'" method="POST">
+                                        <div :class="center" class="my-4">
+                                            <button type="submit" class="btn btn-danger mb-2">ร้องขอการแก้ไข</button>
+                                        </div>
+                                    </form>
                                 </template>
 
                                 <!-- Comment -->
@@ -174,10 +207,10 @@
                                             <div>{{ comment.username}} :</div>
                                         </div>
                                         <div class="col col-8 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                            <div class="bg-light p-1" style="border-radius: 10px;">{{ comment.message }}</div>
+                                            <div class="bg-light px-4" style="border-radius: 10px;">{{ comment.message }}</div>
                                         </div>
-                                        <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1.2rem;">
-                                            <div class="bg-light text-center p-1" style="border-radius: 10px;">{{ formatTime(comment.comment_timestamp) }}</div>
+                                        <div class="col col-2 my-2 d-flex flex-column" style="font-size: 1rem;">
+                                            <div class="bg-light text-center" style="border-radius: 10px;">{{ formatTime(comment.comment_timestamp) }}</div>
                                         </div>
                                     </div>
 

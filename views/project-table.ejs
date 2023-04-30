@@ -9,21 +9,21 @@
         text-align: center;
     }
     .status-fin{
-        background: #6CD396;
+        background: #28a745;
         border-radius: 30px;
         color: white;
         text-align: center;
 
     }
     .status-inpro{
-        background: #84DCE1;
+        background: #ffc107;
         border-radius: 30px;
         color: white;
         text-align: center;
 
     }
     .status-notsta{
-        background: #FF8383;
+        background: #dc3545;
         border-radius: 30px;
         color: white;
         text-align: center;
@@ -50,7 +50,12 @@
         <main>
             <div class="container-fluid" style="min-height: 80vh;">
                 <div class="row mx-5 my-4">
-                    <h1>Your Requirement</h1>
+                    <% if (permission == 'admin') { %>
+                        <h1>All Requirement</h1>
+                    <% } else{ %>
+                        <h1>Your Requirement</h1>
+                    <% } %>
+                    
                     <div type="button" class="mx-5" :class="'add_but'" onclick="location.href='/project/add';">+ Add new</div>
                 </div>
 
@@ -85,78 +90,6 @@
                 </div>
                 </template>
 
-                <!-- <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                        <div class="col-2" :class="'row-1col'">
-                            001
-                        </div>
-                        <div class="col-8">
-                            Lavender Haze
-                        </div>
-                        <div class="col-2">
-                            <div class="w-75 mx-auto" :class="'status-fin'">
-                                Finished
-                            </div>
-                        </div>
-                </div>
-                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-2" :class="'row-1col'">
-                        002
-                    </div>
-                    <div class="col-8">
-                        Maroon
-                    </div>
-                    <div class="col-2">
-                        <div class="w-75 mx-auto" :class="'status-inpro'">
-                            In progress
-                        </div>
-                    </div>
-                </div>
-                <div type="button" class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-2" :class="'row-1col'">
-                        003
-                    </div>
-                    <div class="col-8">
-                        Anti-Hero
-                    </div>
-                    <div class="col-2">
-                        <div class="w-75 mx-auto" :class="'status-notsta'">
-                            Not Started
-                        </div>
-                    </div>
-                </div>
-                <div class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-2" :class="'row-1col'">
-                        
-                    </div>
-                    <div class="col-8">
-                        
-                    </div>
-                    <div class="col-2">
-
-                    </div>
-                </div>
-                <div class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-2" :class="'row-1col'">
-                        
-                    </div>
-                    <div class="col-8">
-                        
-                    </div>
-                    <div class="col-2">
-
-                    </div>
-                </div>
-                <div class="row mx-auto my-4 py-4" :class="'row-table'">
-                    <div class="col-2" :class="'row-1col'">
-                        
-                    </div>
-                    <div class="col-8">
-                        
-                    </div>
-                    <div class="col-2">
-
-                    </div>
-                </div> -->
             </div>
         </main>
         <%- include('footer') %>
