@@ -32,7 +32,7 @@ router.get('/', ifNotLoggedin, async function (req, res, next) {
             username: req.session.username,
             permission: req.session.permission,
             login: req.session.login,
-            teams: JSON.stringify(rows)
+            teams: JSON.stringify(rows).replace(/(\\r)*\\n/g, '<br>')
         }
         await conn.commit();
         res.render('team-table', data)
@@ -85,10 +85,10 @@ router.get('/edit/:teamName', ifNotLoggedin, async function (req, res, next) {
             permission: req.session.permission,
             login: req.session.login,
             teamName: team_name,
-            projects: JSON.stringify(projects),
+            projects: JSON.stringify(projects).replace(/(\\r)*\\n/g, '<br>'),
             projectCount: team[0].total_projects,
             memberCount: team[0].total_members,
-            employees: JSON.stringify(rows),
+            employees: JSON.stringify(rows).replace(/(\\r)*\\n/g, '<br>'),
         }
         await conn.commit();
         res.render('project-edit-team', data)
@@ -112,7 +112,7 @@ router.get('/addMember/:teamName', ifNotLoggedin, async function (req, res, next
             permission: req.session.permission,
             login: req.session.login,
             teamName: team_name,
-            employees: JSON.stringify(rows),
+            employees: JSON.stringify(rows).replace(/(\\r)*\\n/g, '<br>'),
         }
         await conn.commit();
         res.render('project-team-add-member', data)

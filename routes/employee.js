@@ -19,7 +19,7 @@ router.get('/', ifNotLoggedin, async function (req, res, next) {
             username: req.session.username,
             permission: req.session.permission,
             login: req.session.login,
-            employees: JSON.stringify(rows)
+            employees: JSON.stringify(rows).replace(/(\\r)*\\n/g, '<br>')
         }
         await conn.commit();  
         res.render('employees-table', data)
@@ -52,7 +52,7 @@ router.get('/del/:employeeId', ifNotLoggedin, async function (req, res, next) {
             username: req.session.username,
             permission: req.session.permission,
             login: req.session.login,
-            employee: JSON.stringify(rows[0])
+            employee: JSON.stringify(rows[0]).replace(/(\\r)*\\n/g, '<br>')
         }
         await conn.commit();  
         res.render('employee-del', data)
@@ -75,7 +75,7 @@ router.get('/edit/:employeeId', ifNotLoggedin,async function (req, res, next) {
             username: req.session.username,
             permission: req.session.permission,
             login: req.session.login,
-            employee: JSON.stringify(rows[0])
+            employee: JSON.stringify(rows[0]).replace(/(\\r)*\\n/g, '<br>')
         }
         await conn.commit();  
         res.render('project-edit-employee', data)
